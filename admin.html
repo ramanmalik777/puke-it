@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PUKE IT — Admin Control Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#080808;color:#f3efe7;font-family:Inter,Arial,sans-serif;overflow-x:hidden}::selection{background:#ff5a00;color:#080808}button,input,select,textarea{font:inherit}.noise{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}.mono{font-family:"DM Mono",monospace;letter-spacing:.06em}
+    
+    /* Navbar styling */
+    .nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 3vw;border-bottom:1px solid rgba(243,239,231,.14);background:rgba(8,8,8,.74);backdrop-filter:blur(16px);position:fixed;top:0;left:0;right:0;z-index:80}
+    .brand{font-family:"Archivo Black";font-size:24px;color:#f3efe7;text-decoration:none}
+    .brand span{color:#ff5a00}
+    .text-btn{color:#aaa;background:none;border:0;font:11px "DM Mono";cursor:pointer}
+    .text-btn:hover{color:#ff5a00}
+
+    /* Auth Screen styling */
+    .auth-container {
+      min-height: 100vh; display: grid; place-items: center; padding: 20px; padding-top: 120px;
+    }
+    .auth-panel {
+      width: min(440px, 94vw); background: #0c0c0c; border: 1px solid #333; padding: 35px; box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    }
+    .auth-panel h2 { font-family: "Archivo Black"; font-size: 2.2rem; margin: 0 0 10px; text-transform: uppercase; }
+    .auth-panel h2 span { color: #ff5a00; }
+    .auth-panel label { display: block; font: 10px "DM Mono"; color: #777; margin: 25px 0 8px; }
+    .auth-panel input { width: 100%; background: #111; border: 1px solid #333; color: #f3efe7; padding: 15px; outline: none; }
+    .auth-panel input:focus { border-color: #ff5a00; }
+    .primary-btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; background: #ff5a00; color: #080808; padding: 16px 20px; border: 0; cursor: pointer; font-weight: 800; text-transform: uppercase; margin-top: 25px; }
+    .primary-btn:hover { background: #f3efe7; }
+    .error-notice { color: #ff5a00; font: 11px "DM Mono"; margin-top: 15px; display: none; }
+
+    /* Dashboard styling */
+    .dashboard-container {
+      display: none; padding: 120px 4vw 40px;
+    }
+    .dashboard-container.active { display: block; }
+    
+    /* Stats Grid styling */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 40px;
+    }
+    .stat-card {
+      border: 1px solid #333; background: #0c0c0c; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 120px;
+    }
+    .stat-card span { font: 9px "DM Mono"; color: #666; text-transform: uppercase; }
+    .stat-card strong { font-family: "Archivo Black"; font-size: 2rem; color: #ff5a00; margin-top: 15px; }
+
+    /* Layout divisions */
+    .dashboard-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr; gap: 30px; margin-bottom: 40px;
+    }
+    .panel {
+      border: 1px solid #333; background: #0c0c0c; padding: 25px;
+    }
+    .panel-title {
+      font-family: "Archivo Black"; font-size: 1.3rem; margin: 0 0 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 15px;
+    }
+    .panel-title span { font: 10px "DM Mono"; color: #666; }
+
+    /* Table styling */
+    .table-scroll { width: 100%; overflow-x: auto; margin-top: 15px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { font: 10px "DM Mono"; color: #666; padding: 12px; border-bottom: 1px solid #222; text-transform: uppercase; }
+    td { padding: 12px; font-size: 13px; border-bottom: 1px solid #1a1a1a; vertical-align: middle; }
+    tr:hover td { background: #111; }
+    
+    /* Badges & Actions styling */
+    .badge { font: 9px "DM Mono"; padding: 4px 8px; border: 1px solid currentColor; display: inline-block; }
+    .badge-pending { color: #ffae00; }
+    .badge-approved { color: #00ff55; }
+    .badge-rejected { color: #ff3333; }
+    .badge-investigate { color: #00bbff; }
+    .badge-risk { font-weight: bold; }
+    .risk-high { color: #ff3333; }
+    .risk-mid { color: #ffaa00; }
+    .risk-low { color: #888; }
+    
+    .action-btn { background: none; border: 1px solid #333; color: #aaa; font: 9px "DM Mono"; padding: 6px 10px; cursor: pointer; margin-right: 5px; }
+    .action-btn:hover { border-color: #ff5a00; color: #ff5a00; }
+    .approve-btn:hover { border-color: #00ff55; color: #00ff55; }
+    .reject-btn:hover { border-color: #ff3333; color: #ff3333; }
+
+    /* Dropdown */
+    .select-status { background: #111; border: 1px solid #333; color: #f3efe7; font: 10px "DM Mono"; padding: 5px 8px; outline: none; }
+    .select-status:focus { border-color: #ff5a00; }
+
+    /* Charts/Analytics */
+    .chart-container { height: 180px; margin-top: 15px; display: flex; align-items: flex-end; justify-content: space-between; border-left: 1px solid #333; border-bottom: 1px solid #333; padding-left: 10px; padding-bottom: 5px; }
+    .chart-bar { flex: 1; background: #222; margin: 0 4px; border-top: 3px solid #ff5a00; position: relative; transition: height 0.5s ease-out; }
+    .chart-bar:hover { background: #ff5a00; }
+    .chart-bar span { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font: 8px "DM Mono"; color: #888; }
+    .chart-bar b { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font: 8px "DM Mono"; color: #555; }
+
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="noise"></div>
+
+  <header class="nav">
+    <a class="brand" href="/admin">PUKE IT <span>SYSTEMS</span></a>
+    <div>
+      <button class="text-btn" id="signOutBtn" style="display: none;">SYSTEM SIGN OUT</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Auth screen -->
+    <div class="auth-container" id="authScreen">
+      <div class="auth-panel">
+        <h2>SYSTEM<span> LOG.</span></h2>
+        <div class="mono" style="font-size: 10px; color: #555;">ADMIN AUTHORIZATION REQUIRED</div>
+        <form id="adminLoginForm">
+          <label>ACCESS EMAIL</label>
+          <input required type="email" id="email" placeholder="admin@pukeit.in">
+          
+          <label>ACCESS SECURITY PASSWORD</label>
+          <input required type="password" id="password" placeholder="••••••••">
+
+          <div id="loginError" class="error-notice"></div>
+          <button type="submit" class="primary-btn">INITIALIZE ACCESS <span>→</span></button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Admin dashboard container -->
+    <div class="dashboard-container" id="dashboardScreen">
+      
+      <!-- Analytics KPI counters -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>TOTAL PHYSICAL ONDEMAND ORDERS</span>
+          <strong id="statTotalPukes">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>GROSS ESTIMATED REVENUE</span>
+          <strong id="statRevenue">₹0</strong>
+        </div>
+        <div class="stat-card">
+          <span>PUKE BACK CONVERSION RATE</span>
+          <strong id="statPukeBackRate">0.0%</strong>
+        </div>
+        <div class="stat-card">
+          <span>PENDING MODERATION FLAGS</span>
+          <strong id="statFlaggedCount" style="color: #ffaa00;">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>ACTIVE QUEUED SESSION PORTS</span>
+          <strong id="statActiveUsers">0</strong>
+        </div>
+      </div>
+
+      <!-- Grid layout for main boards -->
+      <div class="dashboard-grid">
+        
+        <!-- Moderation Queue -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>MODERATION QUEUE</span>
+            <span>REVIEW FLAG RISK SCORES</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>ORDER ID</th>
+                  <th>MESSAGE DETAILS</th>
+                  <th>RISK SCORE</th>
+                  <th>FLAG CATEGORY</th>
+                  <th>DECISION</th>
+                </tr>
+              </thead>
+              <tbody id="moderationTableBody">
+                <tr>
+                  <td colspan="5" style="text-align: center; color: #666; font-style: italic;">No pending orders for review.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Analytics Charts -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>WEEKLY ANALYTICS</span>
+            <span>DEMO DATA</span>
+          </div>
+          <div class="chart-container" id="revenueChart">
+            <div class="chart-bar" style="height: 35%;"><span>₹796</span><b>MON</b></div>
+            <div class="chart-bar" style="height: 55%;"><span>₹1393</span><b>TUE</b></div>
+            <div class="chart-bar" style="height: 40%;"><span>₹995</span><b>WED</b></div>
+            <div class="chart-bar" style="height: 80%;"><span>₹2189</span><b>THU</b></div>
+            <div class="chart-bar" style="height: 95%;"><span>₹2587</span><b>FRI</b></div>
+            <div class="chart-bar" style="height: 65%;"><span>₹1791</span><b>SAT</b></div>
+            <div class="chart-bar" style="height: 50%;"><span>₹1194</span><b>SUN</b></div>
+          </div>
+          <div style="font-size: 10px; color: #555; text-align: center; margin-top: 30px;" class="mono">
+            ESTIMATED REVENUE PROGRESSION GRAPH
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+        
+        <!-- Orders Management -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>ORDERS MANAGEMENT</span>
+            <span>PHYSICAL DISPATCH TRACKER</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>ORDER ID</th>
+                  <th>RECIPIENT SATELLITE KEYS</th>
+                  <th>RECIPIENT CONTACT</th>
+                  <th>DELIVERY ADDRESS</th>
+                  <th>PRICING</th>
+                  <th>MODERATION</th>
+                  <th>DELIVERY STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="7" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+        
+        <!-- Recipient Safety Reports -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>RECIPIENT SAFETY COMPLAINTS (REPORTS)</span>
+            <span>SHIELD ENFORCEMENTS</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>PUKE CODE</th>
+                  <th>REASON TYPE</th>
+                  <th>DESCRIPTION DETAILS</th>
+                  <th>REPORTED TIMESTAMP</th>
+                </tr>
+              </thead>
+              <tbody id="reportsTableBody">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #666; font-style: italic;">No safety reports logged.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    // Initialize Dashboard
+    window.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("pukeAdminToken");
+      if (token) {
+        checkAdminSession(token);
+      }
+    });
+
+    // Login Form Submit handler
+    $("#adminLoginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = $("#loginError");
+      err.style.display = "none";
+
+      const email = $("#email").value.trim();
+      const password = $("#password").value;
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          checkAdminSession(data.token);
+        } else {
+          err.textContent = data.message || "Invalid Admin Security Credentials.";
+          err.style.display = "block";
+        }
+      } catch (e) {
+        err.textContent = "Server configuration auth error.";
+        err.style.display = "block";
+      }
+    });
+
+    // Verify token role
+    async function checkAdminSession(token) {
+      try {
+        const res = await fetch("/api/auth/me", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (res.ok && data.user.role === "admin") {
+          localStorage.setItem("pukeAdminToken", token);
+          
+          $("#authScreen").style.display = "none";
+          $("#dashboardScreen").classList.add("active");
+          $("#signOutBtn").style.display = "block";
+
+          // Load stats, queues and tables
+          loadStats();
+          loadModerationQueue();
+          loadOrdersTable();
+          loadReportsTable();
+        } else {
+          localStorage.removeItem("pukeAdminToken");
+          $("#loginError").textContent = "Access Denied. Admin identity required.";
+          $("#loginError").style.display = "block";
+        }
+      } catch (err) {
+        console.log("Admin session validation error", err);
+      }
+    }
+
+    // Load Overview Statistics
+    async function loadStats() {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        const res = await fetch("/api/admin/stats", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          $("#statTotalPukes").textContent = data.totalPukes;
+          $("#statRevenue").textContent = "₹" + data.revenue;
+          $("#statPukeBackRate").textContent = data.pukeBackRate;
+          $("#statFlaggedCount").textContent = data.flaggedCount;
+          $("#statActiveUsers").textContent = data.activeChatUsers;
+        }
+      } catch (err) {
+        console.log("Stats fetch failure", err);
+      }
+    }
+
+    // Load Moderation Table Queue
+    async function loadModerationQueue() {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        // Query pending & investigate
+        const res = await fetch("/api/admin/orders?moderation=pending", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        const tbody = $("#moderationTableBody");
+        if (res.ok && data.length > 0) {
+          tbody.innerHTML = data.map(o => {
+            const riskClass = o.safetyScore >= 75 ? "risk-high" : (o.safetyScore >= 50 ? "risk-mid" : "risk-low");
+            return `
+              <tr>
+                <td class="mono" style="font-weight:bold; color:#ff5a00;">${o.orderId}</td>
+                <td>"${o.message}"</td>
+                <td class="mono badge-risk ${riskClass}">${o.safetyScore}%</td>
+                <td class="mono" style="font-size:11px; color:#aaa;">${o.flaggedReason || "NONE"}</td>
+                <td>
+                  <button class="action-btn approve-btn" onclick="moderateOrder('${o.orderId}', 'approved')">APPROVE</button>
+                  <button class="action-btn reject-btn" onclick="moderateOrder('${o.orderId}', 'rejected')">REJECT</button>
+                  <button class="action-btn" onclick="moderateOrder('${o.orderId}', 'investigate')" style="border-color:#00bbff; color:#00bbff;">FLAG</button>
+                </td>
+              </tr>
+            `;
+          }).join("");
+        } else {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #666; font-style: italic;">No pending orders for review.</td></tr>`;
+        }
+      } catch (err) {
+        console.log("Moderation queue fetch failure", err);
+      }
+    }
+
+    // Send Moderation choice
+    async function moderateOrder(orderId, status) {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        const res = await fetch(`/api/admin/moderate/${orderId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ status })
+        });
+
+        if (res.ok) {
+          loadStats();
+          loadModerationQueue();
+          loadOrdersTable();
+        }
+      } catch (err) {
+        console.log("Decision processing error", err);
+      }
+    }
+
+    // Load Orders Management list
+    async function loadOrdersTable() {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        const res = await fetch("/api/admin/orders", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        const tbody = $("#ordersTableBody");
+        if (res.ok && data.length > 0) {
+          tbody.innerHTML = data.map(o => `
+            <tr>
+              <td class="mono" style="font-weight:bold; color:#ff5a00;">${o.orderId}</td>
+              <td class="mono" style="font-size:11px;">${o.pukeCode}</td>
+              <td>
+                <span style="display:block; font-weight:bold;">${o.recipient.name}</span>
+                <span style="font-size:10px; color:#777;">${o.recipient.phone}</span>
+              </td>
+              <td style="font-size:11px; max-width: 200px;">
+                ${o.recipient.house}, ${o.recipient.street}, ${o.recipient.city}, ${o.recipient.state} - ${o.recipient.pin}
+              </td>
+              <td class="mono">₹${o.price}<br><span style="font-size:9px; color:#555;">${o.orangesCount} ORANGES</span></td>
+              <td><span class="badge badge-${o.moderationStatus}">${o.moderationStatus.toUpperCase()}</span></td>
+              <td>
+                <select class="select-status" onchange="updateDeliveryStatus('${o.orderId}', this.value)">
+                  <option value="placed" ${o.status === "placed" ? "selected" : ""}>PLACED</option>
+                  <option value="preparing" ${o.status === "preparing" ? "selected" : ""}>PREPARING</option>
+                  <option value="dispatched" ${o.status === "dispatched" ? "selected" : ""}>DISPATCHED</option>
+                  <option value="delivered" ${o.status === "delivered" ? "selected" : ""}>DELIVERED</option>
+                  <option value="waiting" ${o.status === "waiting" ? "selected" : ""}>WAITING</option>
+                  <option value="puked_back" ${o.status === "puked_back" ? "selected" : ""}>PUKED BACK</option>
+                </select>
+              </td>
+            </tr>
+          `).join("");
+        } else {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td></tr>`;
+        }
+      } catch (err) {
+        console.log("Orders fetch failure", err);
+      }
+    }
+
+    // Update physical status select
+    async function updateDeliveryStatus(orderId, status) {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        const res = await fetch(`/api/admin/delivery/${orderId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ status })
+        });
+
+        if (res.ok) {
+          loadOrdersTable();
+        }
+      } catch (err) {
+        console.log("Delivery update failure", err);
+      }
+    }
+
+    // Load Safety Reports Table
+    async function loadReportsTable() {
+      const token = localStorage.getItem("pukeAdminToken");
+      try {
+        const res = await fetch("/api/admin/reports", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        const tbody = $("#reportsTableBody");
+        if (res.ok && data.length > 0) {
+          tbody.innerHTML = data.map(r => `
+            <tr>
+              <td class="mono" style="font-weight:bold; color:#ff5a00;">${r.pukeCode}</td>
+              <td class="mono" style="font-size:11px; text-transform:uppercase;">${r.reason}</td>
+              <td>${r.description || "N/A"}</td>
+              <td class="mono" style="font-size:11px; color:#555;">${new Date(r.createdAt).toLocaleString()}</td>
+            </tr>
+          `).join("");
+        } else {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #666; font-style: italic;">No safety reports logged.</td></tr>`;
+        }
+      } catch (err) {
+        console.log("Reports fetch failure", err);
+      }
+    }
+
+    // Sign out Admin
+    $("#signOutBtn").addEventListener("click", () => {
+      localStorage.removeItem("pukeAdminToken");
+      $("#dashboardScreen").classList.remove("active");
+      $("#signOutBtn").style.display = "none";
+      $("#authScreen").style.display = "grid";
+      
+      // Clear forms
+      $("#email").value = "";
+      $("#password").value = "";
+      $("#loginError").style.display = "none";
+    });
+  </script>
+</body>
+</html>

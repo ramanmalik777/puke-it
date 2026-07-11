@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
+  <title>PUKE IT — Say it. Stay unknown.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#080808;color:#f3efe7;font-family:Inter,Arial,sans-serif;overflow-x:hidden}::selection{background:#ff5a00;color:#080808}button,input,textarea{font:inherit}.noise{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}.mono{font-family:"DM Mono",monospace;letter-spacing:.06em}.loader{position:fixed;inset:0;background:#ff5a00;color:#080808;z-index:1000;display:grid;place-items:center;transition:transform .9s cubic-bezier(.76,0,.24,1)}.loader.hide{transform:translateY(-110%)}.loader-inner{width:min(680px,86vw)}.loader h1{font-family:"Archivo Black";font-size:clamp(3.5rem,10vw,8rem);line-height:.82;margin:30px 0}.terminal-line,.loader-row{font-family:"DM Mono";font-size:12px}.loader-track{height:8px;background:rgba(0,0,0,.2)}.loader-track span{display:block;height:100%;width:0;background:#080808}.loader-row{display:flex;justify-content:space-between;margin-top:12px}.nav{position:fixed;z-index:80;top:0;left:0;right:0;height:82px;display:flex;align-items:center;padding:0 3vw;border-bottom:1px solid rgba(243,239,231,.14);background:rgba(8,8,8,.74);backdrop-filter:blur(16px)}.nav-links{display:flex;gap:28px;margin:auto}.nav-links a,.text-btn{color:#aaa;text-decoration:none;background:none;border:0;font:11px "DM Mono";cursor:pointer}.nav-links a:hover,.text-btn:hover{color:#ff5a00}.nav-cta,.primary-btn,.outline-btn{display:inline-flex;align-items:center;justify-content:space-between;gap:35px;text-decoration:none;border:0;cursor:pointer;font-weight:800}.nav-cta{background:#ff5a00;color:#080808;padding:14px 18px;font-size:12px}.hero{min-height:100vh;padding:120px 4vw 40px;position:relative;overflow:hidden}.hero-copy{position:relative;z-index:2;margin-top:6vh;max-width:52%}.hero-copy h1{font-size:clamp(3.2rem, 6.2vw, 6.8rem) !important;line-height:.85 !important}.hero-copy h1,.manifesto h2,.order-copy h2,.reply-copy h2,.space-head h2,.quiet h2,.modal h2{font-family:"Archivo Black";font-size:clamp(4rem,9.4vw,10rem);line-height:.82;letter-spacing:-.055em;margin:0}.hero-copy h1 span,.manifesto h2 span,.order-copy h2 span,.reply-copy h2 span,.space-head h2 span,.modal h2 span{color:#ff5a00}.hero-copy p{font-size:clamp(1.2rem,2vw,2rem);margin:20px 0}.orange-stage{position:absolute;width:min(43vw,600px);aspect-ratio:1;right:5vw;top:20vh;display:grid;place-items:center;perspective:900px}
+    
+    /* Interactive orange slide-orbit animation */
+    .orange-orbit-wrapper{width:62%;aspect-ratio:1;display:grid;place-items:center;animation:solarOrbit 15s ease-in-out infinite;z-index:2}
+    @keyframes solarOrbit{
+      0%{transform:translate(0,0) scale(1)}
+      25%{transform:translate(20px,-10px) scale(.96)}
+      50%{transform:translate(0,-20px) scale(.92)}
+      75%{transform:translate(-20px,-10px) scale(.96)}
+      100%{transform:translate(0,0) scale(1)}
+    }
+    
+    .orange{width:100%;aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 35% 28%,#ff9b2f 0,#ff6a00 24%,#e74700 64%,#8f1f00 100%);box-shadow:inset -30px -35px 60px rgba(0,0,0,.35),inset 14px 14px 25px rgba(255,255,255,.12),0 40px 100px rgba(255,90,0,.18);display:grid;place-items:center;transform-style:preserve-3d;transition:transform .12s ease-out}.orange:before{content:"";position:absolute;inset:0;border-radius:50%;opacity:.28;background-image:radial-gradient(#3b1600 1px,transparent 1.5px);background-size:8px 8px}.orange:after{content:"";position:absolute;width:8%;height:5%;background:#32200c;border-radius:50%;top:2%;left:46%;box-shadow:0 -6px 0 #30551e}.orange-text{font-family:"Archivo Black";font-size:clamp(2rem,5vw,5rem);line-height:.72;letter-spacing:-.08em;color:#080808;transform:rotate(-8deg) translateZ(20px);text-align:center;z-index:2}.orange-shine{position:absolute;width:25%;height:14%;border-radius:50%;background:rgba(255,255,255,.15);filter:blur(12px);top:18%;left:18%}.orbit{position:absolute;border:1px solid rgba(255,90,0,.35);border-radius:50%;inset:5%;animation:spin 18s linear infinite}.orbiting-orange{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ff9b2f 0,#ff6a00 24%,#e74700 64%,#8f1f00 100%);position:absolute;top:50%;left:-7px;box-shadow:inset -2px -2px 5px rgba(0,0,0,.4),0 2px 6px rgba(255,90,0,.3)}.orbiting-orange::after{content:"";position:absolute;width:4px;height:2px;background:#4ade80;border-radius:50%;top:-1px;left:50%;transform:translateX(-50%)}.orbit-two{inset:15%;animation-direction:reverse;animation-duration:12s;transform:rotate(55deg)}@keyframes spin{to{transform:rotate(360deg)}}.scan-line{position:absolute;left:14%;right:14%;height:1px;background:#ff5a00;box-shadow:0 0 18px #ff5a00;animation:scan 3s ease-in-out infinite}@keyframes scan{0%,100%{top:25%;opacity:0}50%{top:75%;opacity:1}}.float-label{position:absolute;font-size:9px;color:#999;background:#080808;border:1px solid #333;padding:8px}.label-one{left:0;top:24%}.label-two{right:0;top:50%}.label-three{left:8%;bottom:13%}.hero-bottom{position:absolute;z-index:3;left:4vw;right:4vw;bottom:42px;display:flex;justify-content:space-between;align-items:flex-end}.hero-description{color:#aaa;line-height:1.5}.primary-btn{background:#ff5a00;color:#080808;padding:18px 22px}.primary-btn:hover{background:#f3efe7}.scroll-note{font-size:9px;color:#666;text-align:right}.ticker{background:#ff5a00;color:#080808;overflow:hidden;transform:rotate(-1deg);margin:-8px -10px}.ticker-track{display:flex;width:max-content;animation:ticker 24s linear infinite;padding:14px 0;font-family:"Archivo Black";font-size:18px}.ticker-track span{white-space:nowrap;padding-right:40px}@keyframes ticker{to{transform:translateX(-50%)}}.section-pad{padding:120px 4vw}.section-tag{font-size:10px;color:#777;margin-bottom:50px}.manifesto-grid{display:grid;grid-template-columns:1.5fr .6fr;gap:7vw;align-items:end}.manifesto-answer .yes{font-family:"Archivo Black";font-size:5rem;color:#ff5a00}.manifesto-answer p{font-size:1.25rem;line-height:1.6;color:#b5b5b5}.micro{font-size:9px;color:#666;margin-top:30px}.steps{border-top:1px solid #242424}.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #333;border-left:1px solid #333}.step{padding:30px;min-height:390px;border-right:1px solid #333;border-bottom:1px solid #333;display:flex;flex-direction:column}.step>span{font:11px "DM Mono";color:#666}.step-icon{font-size:3rem;color:#ff5a00;margin:auto 0}.step h3{font-family:"Archivo Black";font-size:1.7rem;margin:0 0 15px}.step p{color:#888;line-height:1.6;font-size:.92rem}.order-section{background:#f3efe7;color:#080808}.order-grid{display:grid;grid-template-columns:1fr 1fr;gap:7vw}.order-copy p{font-size:1.2rem}.mini-orange{width:220px;aspect-ratio:1;border-radius:50%;margin:70px auto 0;background:radial-gradient(circle at 35% 28%,#ff9b2f,#ff5a00 55%,#9e2700);display:grid;place-items:center;box-shadow:0 25px 50px rgba(0,0,0,.2)}.mini-orange span{font-family:"Archivo Black";font-size:3rem;line-height:.75;transform:rotate(-9deg)}.composer-card{background:#080808;color:#f3efe7;padding:28px;box-shadow:18px 18px 0 #ff5a00}.composer-head,.message-meta{display:flex;justify-content:space-between;font-size:10px;color:#777}.live-dot{color:#ff5a00}.composer-card label{display:block;font:11px "DM Mono";margin:35px 0 12px}.composer-card textarea{width:100%;height:190px;background:#111;color:#f3efe7;border:1px solid #333;padding:18px;resize:none;outline:none;font-size:1.05rem}.composer-card textarea:focus{border-color:#ff5a00}.message-meta{margin:10px 0 25px}.fit-panel{border:1px solid #333;padding:20px}.fit-top{display:flex;justify-content:space-between}.fit-top h3{font-family:"Archivo Black";margin:8px 0;font-size:1.4rem}.fit-score{font:2rem "Archivo Black";color:#ff5a00}.fit-track{height:6px;background:#292929;margin:15px 0}.fit-track span{display:block;height:100%;width:0;background:#ff5a00;transition:.3s}.fit-panel p{color:#999;font-size:.85rem}.price-row{display:grid;grid-template-columns:1fr 1fr;margin:22px 0;border:1px solid #333}.price-row>div{padding:18px;display:flex;flex-direction:column;gap:8px}.price-row>div+div{border-left:1px solid #333}.price-row span{font-size:9px;color:#777}.price-row strong{font-size:2rem}.full{width:100%}.reply-section{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}.reply-terminal{border:1px solid #333;background:#0c0c0c;box-shadow:0 0 80px rgba(255,90,0,.08)}.terminal-top{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #333;font:9px "DM Mono";color:#777}.terminal-body{padding:40px 25px;font:12px/2 "DM Mono";color:#888}.redacted{color:#f3efe7}.orange-color{color:#ff5a00}.reply-copy p,.space-head>p{color:#999;line-height:1.7;font-size:1.05rem}.outline-btn{background:transparent;border:1px solid #555;color:#f3efe7;padding:16px 20px}.outline-btn:hover{border-color:#ff5a00;color:#ff5a00}.space-section{background:#0d0d0d}.space-head{display:grid;grid-template-columns:1.4fr .6fr;gap:7vw;align-items:end}.space-cards{display:grid;grid-template-columns:repeat(4,1fr);margin-top:70px}.space-card{position:relative;text-align:left;min-height:360px;padding:24px;background:#111;color:#f3efe7;border:1px solid #333;cursor:pointer;transition:.25s}.space-card:hover{transform:translateY(-8px);background:#ff5a00;color:#080808}.card-no{font:10px "DM Mono";opacity:.6}.emoji{font-size:3rem;margin:60px 0 25px;display:flex;align-items:center;min-height:76px}.space-card h3{font-family:"Archivo Black";font-size:1.45rem}.space-card p{opacity:.65;line-height:1.5}.space-card b{position:absolute;bottom:25px;font-size:11px}
+    
+    /* Dynamic Hover animations for SVG accent paths in cards */
+    .space-card:hover svg {
+      color: #080808 !important;
+    }
+    .space-card:hover .accent-stroke {
+      stroke: #080808 !important;
+    }
+    .space-card:hover .accent-fill {
+      fill: #080808 !important;
+    }
+
+    /* Special AI Card Visual treatment & Mascot transition */
+    .space-card.ai-card {
+      background: linear-gradient(135deg, #140d0a 0%, #080504 100%) !important;
+      border: 1px solid #ff5a00 !important;
+      box-shadow: 0 0 25px rgba(255, 90, 0, 0.12) !important;
+      color: #f3efe7 !important;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    .space-card.ai-card:hover {
+      background: #ff5a00 !important;
+      color: #080808 !important;
+      box-shadow: 0 0 35px rgba(255, 90, 0, 0.35) !important;
+      border-color: #ff5a00 !important;
+    }
+    .ai-icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px 0 20px !important;
+    }
+    .ai-orange-svg {
+      width: 76px;
+      height: 76px;
+      overflow: visible;
+    }
+    .ai-orange-svg .circuit-ring {
+      transform-origin: 50px 50px;
+      animation: spinCircuit 12s linear infinite;
+    }
+    @keyframes spinCircuit {
+      to { transform: rotate(360deg); }
+    }
+    .space-card.ai-card:hover .ai-orange-svg .circuit-ring {
+      stroke: #080808;
+    }
+    .space-card.ai-card:hover .mascot-body {
+      fill: #080808 !important;
+      stroke: #f3efe7 !important;
+    }
+    .space-card.ai-card:hover .mascot-cap {
+      fill: #f3efe7 !important;
+    }
+    .space-card.ai-card:hover .mascot-cap-brim {
+      fill: #f3efe7 !important;
+    }
+    .space-card.ai-card:hover .mascot-eye {
+      stroke: #f3efe7 !important;
+    }
+    .space-card.ai-card:hover .mascot-mouth {
+      stroke: #f3efe7 !important;
+    }
+
+    .quiet{text-align:center;padding-top:180px;padding-bottom:180px}.quiet>p:first-child{color:#ff5a00}.quiet h2{font-size:clamp(2.5rem,5.5vw,6rem);max-width:1200px;margin:20px auto}.quiet h2.muted{color:#333}.quiet-copy{color:#888;font-size:1.2rem}footer{padding:70px 4vw 40px;border-top:1px solid #333}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-top:60px}.footer-grid div{display:flex;flex-direction:column;gap:12px}.footer-grid a,.footer-grid button{color:#888;text-decoration:none;background:none;border:0;text-align:left;padding:0;cursor:pointer;font-size:12px}.sound-toggle{position:fixed;right:18px;bottom:18px;z-index:70;background:#111;color:#777;border:1px solid #333;padding:10px;font-size:9px;cursor:pointer}#cursor{position:fixed;width:12px;height:12px;background:#ff5a00;border-radius:50%;pointer-events:none;z-index:999;mix-blend-mode:difference;transform:translate(-50%,-50%)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);z-index:200;display:none;place-items:center;padding:20px}.modal.open{display:grid}.modal-panel{width:min(620px,96vw);max-height:92vh;overflow:auto;background:#0c0c0c;border:1px solid #383838;padding:42px;position:relative;box-shadow:0 30px 100px #000}.modal-panel.large{width:min(900px,96vw)}.modal-close{position:absolute;right:18px;top:12px;background:none;color:#888;border:0;font-size:2rem;cursor:pointer}.modal-kicker{font-size:9px;color:#777;margin-bottom:28px}.modal h2{font-size:clamp(3rem,7vw,6rem)}.progress{display:flex;gap:8px;margin:30px 0}.progress span{height:3px;flex:1;background:#333}.progress span.active{background:#ff5a00}.form-step{display:none}.form-step.active{display:block}.form-step h3{font:12px "DM Mono";margin:25px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid input,.code-input,.chat-compose input{background:#111;border:1px solid #333;color:#f3efe7;padding:16px;outline:none}.form-grid input:focus,.code-input:focus{border-color:#ff5a00}.form-grid .wide{grid-column:1/-1}.form-step .primary-btn{margin-top:20px}.privacy-note{border-left:3px solid #ff5a00;background:#141414;padding:14px 18px;margin-bottom:18px}.privacy-note b{font-size:11px}.privacy-note p{font-size:12px;color:#888;margin-bottom:0}.checkout-summary{border:1px solid #333}.checkout-summary>div{display:flex;justify-content:space-between;padding:17px;border-bottom:1px solid #333}.checkout-summary .total{font-size:1.3rem;border:0}.payment-tabs{display:flex;margin:20px 0 10px}.payment-tabs button{flex:1;padding:14px;background:#111;color:#888;border:1px solid #333}.payment-tabs button.active{background:#f3efe7;color:#080808}.demo-payment{text-align:center;color:#666;font-size:9px;margin:18px}.success-screen{display:none;text-align:center}.success-screen.show{display:block}.success-mark{width:60px;height:60px;border-radius:50%;background:#ff5a00;color:#080808;display:grid;place-items:center;font-size:2rem;margin:0 auto 25px}.generated-code{font:clamp(2rem,6vw,4rem) "Archivo Black";color:#ff5a00;border:1px dashed #555;padding:18px;margin:12px 0}.small{font-size:12px;color:#777;max-width:480px;margin:18px auto}.tracking-id{font-size:10px;color:#888;margin:20px}.code-input{width:100%;font:2rem "DM Mono";text-transform:uppercase;text-align:center;margin:25px 0}.demo-hint{text-align:center;font-size:9px;color:#555;margin-top:15px}.connection-ok{color:#ff5a00;font-size:10px}.recipient-actions{display:flex;flex-direction:column;margin-top:20px}.recipient-actions button{background:none;border:0;border-top:1px solid #333;color:#777;padding:14px;cursor:pointer}.recipient-actions button:hover{color:#ff5a00}.recipient-notice{display:none;margin-top:15px;padding:14px;background:#151515;color:#aaa;font-size:12px}.chat-panel{height:min(720px,92vh);display:flex;flex-direction:column}.chat-top{display:flex;justify-content:space-between;font-size:10px}.online{color:#ff5a00}.identity{font-family:"Archivo Black";font-size:2rem;margin:18px 0}.chat-log{flex:1;overflow:auto;background:#080808;border:1px solid #292929;padding:15px;min-height:300px}.system-message{font:10px/1.5 "DM Mono";color:#666;text-align:center;padding:15px}.bubble{max-width:80%;padding:11px 14px;margin:10px 0;background:#1a1a1a;border-radius:2px;font-size:13px}.bubble.me{margin-left:auto;background:#ff5a00;color:#080808}.chat-compose{display:flex;margin-top:12px}.chat-compose input{flex:1}.chat-compose button{width:55px;background:#ff5a00;border:0;font-size:1.5rem}.chat-safety{text-align:center;font-size:8px;color:#555;margin-top:10px}@media(max-width:900px){#cursor{display:none}.nav-links{display:none}.hero{min-height:900px}.hero-copy h1{font-size:16vw}.orange-stage{width:85vw;right:-20vw;top:37vh}.hero-bottom{bottom:30px}.manifesto-grid,.order-grid,.reply-section,.space-head{grid-template-columns:1fr}.steps-grid,.space-cards{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}.manifesto-answer{max-width:500px}.order-copy{margin-bottom:30px}.reply-copy{order:-1}}@media(max-width:560px){.nav{height:68px}.nav-cta{padding:11px}.hero{padding-top:100px;min-height:820px}.hero-copy h1{font-size:18vw}.hero-copy p{font-size:1rem}.orange-stage{top:36vh;width:105vw;right:-42vw}.float-label{display:none}.hero-bottom{align-items:flex-end}.scroll-note{display:none}.section-pad{padding:80px 20px}.steps-grid,.space-cards{grid-template-columns:1fr}.step{min-height:300px}.space-card{min-height:280px}.composer-card{padding:18px;box-shadow:9px 9px 0 #ff5a00}.footer-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.modal-panel{padding:32px 20px}.footer-logo{font-size:22vw}}
+    .auth-tabs{display:grid;grid-template-columns:1fr 1fr;margin:28px 0 18px;border:1px solid #333}.auth-tabs button{padding:14px;background:#111;color:#777;border:0;cursor:pointer;font:10px "DM Mono"}.auth-tabs button.active{background:#ff5a00;color:#080808}.auth-form{display:none;gap:12px}.auth-form.active{display:grid}.auth-form input{width:100%;background:#111;border:1px solid #333;color:#f3efe7;padding:16px;outline:none}.auth-form input:focus{border-color:#ff5a00}.auth-note{font-size:11px;color:#666;text-align:center;margin-top:18px}@media(max-width:900px){.auth-nav{display:none}}
+    .payment-method{display:none;border:1px solid #333;padding:16px;margin-top:10px}.payment-method.active{display:block}
+    .payment-method label,.field-label{display:block;font:9px "DM Mono";color:#777;margin-bottom:10px}
+    .payment-method input,.reply-textarea{width:100%;background:#111;border:1px solid #333;color:#f3efe7;padding:15px;outline:none}
+    .payment-method input:focus,.reply-textarea:focus{border-color:#ff5a00}
+    .quick-upi{display:flex;gap:8px;margin-top:10px}.quick-upi button{flex:1;background:#151515;color:#aaa;border:1px solid #333;padding:10px;cursor:pointer}
+    .card-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.payment-error{display:none;color:#ff784f;font-size:11px;margin:10px 0}
+    .linked-route{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #333;margin:25px 0}
+    .linked-route div{padding:16px;border-right:1px solid #333}.linked-route div:last-child{border:0}
+    .linked-route span{display:block;font:8px "DM Mono";color:#666;margin-bottom:8px}.linked-route strong{font-size:12px;color:#ff5a00}
+    .reply-explain{color:#888;line-height:1.6}.reply-textarea{height:150px;resize:none}.reply-fit{display:flex;justify-content:space-between;font:10px "DM Mono";color:#777;margin:10px 0 22px}.reply-fit strong{color:#ff5a00}
+    .typing-ai{color:#777;font:10px "DM Mono";padding:10px}
+    @media(max-width:560px){.linked-route{grid-template-columns:1fr}.linked-route div{border-right:0;border-bottom:1px solid #333}}
+    
+    .brand-badge-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #f3efe7 !important;
+      font-family: "Archivo Black", Impact, sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      transform: rotate(-1deg);
+    }
+    .brand-badge-logo svg {
+      width: 32px;
+      height: 32px;
+      overflow: visible;
+    }
+    .brand-badge-logo .badge-logo-text {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .footer-logo.brand-badge-logo {
+      font-size: clamp(3rem, 10vw, 6rem);
+      gap: clamp(10px, 3vw, 24px);
+      margin-bottom: 25px;
+      transform: rotate(-2deg);
+    }
+    .footer-logo.brand-badge-logo svg {
+      width: clamp(60px, 15vw, 100px);
+      height: clamp(60px, 15vw, 100px);
+    }
+    .footer-logo.brand-badge-logo .badge-logo-text {
+      font-size: clamp(3rem, 10vw, 6rem);
+    }
+
+    .report-select {
+      width: 100%; background: #111; border: 1px solid #333; color: #f3efe7; padding: 16px; outline: none; margin-bottom: 15px;
+    }
+    .report-select:focus { border-color: #ff5a00; }
+  </style>
+</head>
+<body>
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="terminal-line">PUKE IT® / SYSTEM BOOT</div>
+      <h1>LOADING<br>FEELINGS...</h1>
+      <div class="loader-track"><span id="loaderBar"></span></div>
+      <div class="loader-row"><span id="loaderStatus">HIDING IDENTITY...</span><span id="loaderPercent">0%</span></div>
+    </div>
+  </div>
+
+  <div id="cursor"></div>
+  <div class="noise"></div>
+
+  <header class="nav">
+    <a class="brand brand-badge-logo" href="#home" aria-label="Puke It home">
+      <svg class="badge-orange-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M48 20 C 52 12, 62 14, 60 24 Z" fill="#4ade80" />
+        <path d="M50 24 C 49 19, 51 17, 52 16" fill="none" stroke="#f3efe7" stroke-width="2" />
+        <circle cx="50" cy="56" r="30" fill="#ff5a00" />
+        <circle cx="50" cy="26" r="1.5" fill="#f3efe7" />
+      </svg>
+      <span class="badge-logo-text">PUKE IT</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#how">HOW IT WORKS</a>
+      <a href="#space">PUKE SPACE</a>
+      <button class="text-btn" data-open="codeModal">GOT PUKED?</button>
+      <button class="text-btn" data-open="trackModal">TRACK ORDER</button>
+      <button class="text-btn auth-nav" id="navAuthBtn" data-open="authModal">SIGN IN</button>
+    </nav>
+    <a class="nav-cta" href="#order">PUKE NOW <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <h1>SAY WHAT<br>YOU CAN'T <span>SAY.</span></h1>
+        <p>We'll put it on an orange.</p>
+      </div>
+
+      <div class="orange-stage" aria-label="Interactive Puke It orange">
+        <div class="orbit orbit-one"><div class="orbiting-orange"></div></div>
+        <div class="orbit orbit-two"><div class="orbiting-orange"></div></div>
+        <div class="orange-orbit-wrapper">
+          <div class="orange" id="heroOrange">
+            <div class="orange-text">PUKE<br>IT</div>
+            <div class="orange-shine"></div>
+          </div>
+        </div>
+        <div class="scan-line"></div>
+        <span class="float-label label-one mono">IDENTITY: HIDDEN</span>
+        <span class="float-label label-two mono">PRICE: ₹199</span>
+        <span class="float-label label-three mono">STATUS: READY TO PUKE</span>
+      </div>
+
+      <div class="hero-bottom">
+        <div>
+          <p class="hero-description">One orange. Your message.<br>Zero awkward conversations.</p>
+          <a class="primary-btn" href="#order">PUKE IT — ₹199 <span>↗</span></a>
+        </div>
+        <div class="scroll-note mono">SCROLL TO RELEASE<br>EMOTIONAL BAGGAGE ↓</div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>NO NAMES ✦ ONE ORANGE ✦ ₹199 ✦ SHIPPING INCLUDED ✦ SAY IT. STAY UNKNOWN. ✦ NO NAMES ✦ ONE ORANGE ✦ ₹199 ✦ SHIPPING INCLUDED ✦ SAY IT. STAY UNKNOWN. ✦</span>
+        <span>NO NAMES ✦ ONE ORANGE ✦ ₹199 ✦ SHIPPING INCLUDED ✦ SAY IT. STAY UNKNOWN. ✦ NO NAMES ✦ ONE ORANGE ✦ ₹199 ✦ SHIPPING INCLUDED ✦ SAY IT. STAY UNKNOWN. ✦</span>
+      </div>
+    </div>
+
+    <section class="manifesto section-pad" id="how">
+      <div class="section-tag mono">01 / WHAT EVEN IS THIS?</div>
+      <div class="manifesto-grid">
+        <h2>WAIT.<br>YOU ACTUALLY<br>SEND AN <span>ORANGE?</span></h2>
+        <div class="manifesto-answer">
+          <div class="yes">YES.</div>
+          <p>You type the thing you've been holding in. We write it on an orange, bubble-wrap your emotional baggage, box it, and deliver it anonymously.</p>
+          <div class="micro mono">WEIRD? YES. MEMORABLE? ALSO YES.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps section-pad">
+      <div class="section-tag mono">02 / THE PUKE PROTOCOL</div>
+      <div class="steps-grid">
+        <article class="step">
+          <span>01</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+              <path d="M48 16 C 52 10, 62 12, 60 20 Z" fill="#4ade80" />
+              <circle cx="50" cy="50" r="28" fill="#ff5a00" />
+              <path d="M38 42 H62 M38 50 H62 M44 58 H56" stroke="#080808" stroke-width="3.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>YOU TYPE IT.</h3>
+          <p>Confession, apology, secret, roast, or the thing you never found the courage to say.</p>
+        </article>
+        <article class="step">
+          <span>02</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+              <path d="M48 16 C 52 10, 62 12, 60 20 Z" fill="#4ade80" />
+              <circle cx="50" cy="50" r="28" fill="#ff5a00" />
+              <path d="M36 56 L54 38 L62 46 L44 64 Z" fill="#080808" />
+              <path d="M34 58 L38 66 L30 70 Z" fill="#f3efe7" />
+            </svg>
+          </div>
+          <h3>WE WRITE IT.</h3>
+          <p>Your words go directly onto a real orange. Puke Fit estimates how much fruit your feelings need.</p>
+        </article>
+        <article class="step">
+          <span>03</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+              <path d="M48 16 C 52 10, 62 12, 60 20 Z" fill="#4ade80" />
+              <circle cx="50" cy="50" r="28" fill="#ff5a00" />
+              <rect x="38" y="46" width="24" height="18" rx="3" fill="#080808" />
+              <path d="M43 46 V38 C43 32, 57 32, 57 38 V46" fill="none" stroke="#080808" stroke-width="3.5" />
+            </svg>
+          </div>
+          <h3>WE HIDE YOU.</h3>
+          <p>Your identity and private return details are never shown to the recipient.</p>
+        </article>
+        <article class="step">
+          <span>04</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+              <path d="M48 16 C 52 10, 62 12, 60 20 Z" fill="#4ade80" />
+              <circle cx="50" cy="50" r="28" fill="#ff5a00" />
+              <path d="M34 42 H66 V66 H34 Z" fill="none" stroke="#080808" stroke-width="3" />
+              <path d="M34 42 L50 32 L66 42" fill="none" stroke="#080808" stroke-width="3" />
+              <path d="M50 42 V66" stroke="#080808" stroke-width="2" />
+            </svg>
+          </div>
+          <h3>WE SHIP IT.</h3>
+          <p>Bubble-wrapped. Boxed. Delivered across India. ₹199 including standard shipping.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="order-section section-pad" id="order">
+      <div class="section-tag mono">03 / RELEASE WHAT'S INSIDE</div>
+      <div class="order-grid">
+        <div class="order-copy">
+          <h2>WHAT DO YOU<br>NEED TO <span>SAY?</span></h2>
+          <p>No categories. No judgment. Just type it.</p>
+          <div class="mini-orange"><span>PUKE<br>IT</span></div>
+        </div>
+
+        <div class="composer-card">
+          <div class="composer-head">
+            <span class="mono">PUKE COMPOSER v1.0</span>
+            <span class="live-dot">● LIVE</span>
+          </div>
+          <label for="message">YOUR MESSAGE</label>
+          <textarea id="message" maxlength="1200" placeholder="Type the thing you've been holding in..."></textarea>
+          <div class="message-meta">
+            <span><b id="charCount">0</b> characters</span>
+            <span>HANDWRITING SPACE ESTIMATE</span>
+          </div>
+
+          <div class="fit-panel">
+            <div class="fit-top">
+              <div>
+                <span class="mono">PUKE FIT™</span>
+                <h3 id="fitTitle">START TYPING</h3>
+              </div>
+              <div class="fit-score" id="fitScore">0%</div>
+            </div>
+            <div class="fit-track"><span id="fitBar"></span></div>
+            <p id="fitMessage">One orange fits approximately one short handwritten line.</p>
+            <button type="button" class="outline-btn" id="shortenBtn" style="padding: 6px 12px; font-size: 11px; margin-top: 10px; display: none;">SHORTEN WITH AI ✦</button>
+          </div>
+
+          <div class="price-row">
+            <div><span class="mono">ESTIMATED TOTAL</span><strong id="price">₹199</strong></div>
+            <div><span class="mono">ORANGES</span><strong id="orangeCount">1</strong></div>
+          </div>
+
+          <button class="primary-btn full" id="continueOrder">CONTINUE TO DELIVERY <span>↗</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="reply-section section-pad">
+      <div class="reply-terminal">
+        <div class="terminal-top"><span>PUKE NETWORK</span><span>● SECURE CONNECTION</span></div>
+        <div class="terminal-body">
+          <p>&gt; INCOMING TRANSMISSION</p>
+          <p>&gt; ORIGINAL SENDER: <span class="redacted">████████████</span></p>
+          <p>&gt; ADDRESS: <span class="redacted">████████████████</span></p>
+          <p>&gt; CONNECTION STATUS: <span class="orange-color">AVAILABLE</span></p>
+        </div>
+      </div>
+      <div class="reply-copy">
+        <div class="section-tag mono">04 / THE LOOP</div>
+        <h2>THEY PUKED.<br><span>PUKE BACK.</span></h2>
+        <p>Every box includes a private Puke Code and QR. If the recipient wants to answer, they can send an orange back—without either person seeing the other's address.</p>
+        <button class="outline-btn" data-open="codeModal">I GOT PUKED <span>→</span></button>
+      </div>
+    </section>
+
+    <section class="space-section section-pad" id="space">
+      <div class="space-head">
+        <div>
+          <div class="section-tag mono">05 / PUKE SPACE [ BETA ]</div>
+          <h2>NO ORANGE?<br>JUST <span>PUKE HERE.</span></h2>
+        </div>
+        <p>Anonymous conversations with fruit-based identities. Talk, listen, or meet a random human. If nobody's around, Puke AI is waiting.</p>
+      </div>
+      <div class="space-cards">
+        <button class="space-card" data-mode="vent">
+          <span class="card-no">01</span>
+          <div class="emoji">
+            <svg class="space-card-svg" viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round;">
+              <path d="M30 40 L45 40 L58 28 L58 72 L45 60 L30 60 Z" />
+              <path d="M30 46 L24 46 C22 46, 20 48, 20 50 L20 54 C20 56, 22 58, 24 58 L30 58" />
+              <path d="M45 60 L45 74" />
+              <path d="M68 38 C74 44, 74 56, 68 62" stroke="#ff5a00" stroke-width="4.5" class="accent-stroke" />
+              <path d="M78 30 C88 40, 88 60, 78 70" stroke="#ff5a00" stroke-width="4.5" class="accent-stroke" />
+            </svg>
+          </div>
+          <h3>I NEED TO TALK</h3>
+          <p>Get it out. Someone will listen.</p>
+          <b>ENTER →</b>
+        </button>
+        <button class="space-card" data-mode="listen">
+          <span class="card-no">02</span>
+          <div class="emoji">
+            <svg class="space-card-svg" viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round;">
+              <path d="M25 50 C25 22, 75 22, 75 50" stroke-width="5" />
+              <rect x="18" y="44" width="10" height="22" rx="4" fill="currentColor" />
+              <rect x="72" y="44" width="10" height="22" rx="4" fill="currentColor" />
+              <circle cx="50" cy="52" r="14" stroke="#ff5a00" stroke-width="3" stroke-dasharray="4 4" class="accent-stroke" />
+              <path d="M42 52 A 8 8 0 0 1 58 52" stroke="#ff5a00" stroke-width="4" class="accent-stroke" />
+            </svg>
+          </div>
+          <h3>I'M HERE TO LISTEN</h3>
+          <p>Be the stranger someone needs.</p>
+          <b>ENTER →</b>
+        </button>
+        <button class="space-card" data-mode="random">
+          <span class="card-no">03</span>
+          <div class="emoji">
+            <svg class="space-card-svg" viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round;">
+              <rect x="20" y="24" width="38" height="38" rx="6" />
+              <circle cx="30" cy="34" r="3.5" fill="#ff5a00" stroke="none" class="accent-fill" />
+              <circle cx="48" cy="52" r="3.5" fill="#ff5a00" stroke="none" class="accent-fill" />
+              <rect x="42" y="38" width="38" height="38" rx="6" fill="#0d0d0d" />
+              <circle cx="61" cy="57" r="3.5" fill="#ff5a00" stroke="none" class="accent-fill" />
+              <circle cx="52" cy="48" r="3.5" fill="#ff5a00" stroke="none" class="accent-fill" />
+              <circle cx="70" cy="66" r="3.5" fill="#ff5a00" stroke="none" class="accent-fill" />
+            </svg>
+          </div>
+          <h3>RANDOM</h3>
+          <p>No context. Just talk.</p>
+          <b>ENTER →</b>
+        </button>
+        <button class="space-card ai-card" data-mode="ai">
+          <span class="card-no">AI</span>
+          <div class="emoji ai-icon-container">
+            <svg class="ai-orange-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+              <path d="M28 32 C28 20, 72 20, 72 32 Z" fill="#ff5a00" class="mascot-cap" />
+              <path d="M72 30 L84 25 C84 25, 80 34, 72 32" fill="#ff5a00" class="mascot-cap-brim" />
+              <circle cx="50" cy="55" r="24" fill="#ff5a00" stroke="#080808" stroke-width="2.5" class="mascot-body" />
+              <path d="M42 12 C 48 8, 54 10, 52 18 Z" fill="#4ade80" />
+              <path d="M38 48 L46 56 M46 48 L38 56" stroke="#080808" stroke-width="3" stroke-linecap="round" class="mascot-eye" />
+              <path d="M54 48 L62 56 M62 48 L54 56" stroke="#080808" stroke-width="3" stroke-linecap="round" class="mascot-eye" />
+              <path d="M42 66 C42 66, 50 78, 58 66" fill="none" stroke="#080808" stroke-width="3" stroke-linecap="round" class="mascot-mouth" />
+              <path d="M48 68 C48 76, 52 80, 50 82 C48 80, 46 76, 46 70" fill="#4ade80" stroke="#080808" stroke-width="1.5" />
+            </svg>
+          </div>
+          <h3>PUKE AI</h3>
+          <p>No human around? Puke it here.</p>
+          <b>START →</b>
+        </button>
+      </div>
+    </section>
+
+    <section class="quiet section-pad">
+      <p class="mono">JOKES ASIDE.</p>
+      <h2>SOMETIMES THE HARDEST PART ISN'T KNOWING WHAT YOU FEEL.</h2>
+      <h2 class="muted">IT'S SAYING IT.</h2>
+      <p class="quiet-copy">Puke It gives those words somewhere to go.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a class="footer-logo brand-badge-logo" href="#home" aria-label="Puke It home">
+      <svg class="badge-orange-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M48 20 C 52 12, 62 14, 60 24 Z" fill="#4ade80" />
+        <path d="M50 24 C 49 19, 51 17, 52 16" fill="none" stroke="#f3efe7" stroke-width="2" />
+        <circle cx="50" cy="56" r="30" fill="#ff5a00" />
+        <circle cx="50" cy="26" r="1.5" fill="#f3efe7" />
+      </svg>
+      <span class="badge-logo-text">PUKE IT</span>
+    </a>
+    <div class="footer-grid">
+      <p>SAY IT.<br>STAY UNKNOWN.</p>
+      <div><a href="#order">PUKE NOW</a><button data-open="codeModal">GOT PUKED?</button><a href="#space">PUKE SPACE</a></div>
+      <div><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">SAFETY</a></div>
+      <div class="mono">MADE FOR THINGS<br>LEFT UNSAID.</div>
+    </div>
+  </footer>
+
+  <button id="soundToggle" class="sound-toggle mono">SOUND: OFF</button>
+
+  <!-- Order modal -->
+  <div class="modal" id="orderModal">
+    <div class="modal-panel large">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">SECURE ORDER FLOW / LIVE GATEWAY</div>
+      <h2>WHERE SHOULD<br>WE <span>PUKE?</span></h2>
+      <div class="progress"><span class="active"></span><span></span><span></span></div>
+      <form id="orderForm">
+        <div class="form-step active" data-step="1">
+          <h3>01 / RECIPIENT DETAILS</h3>
+          <div class="form-grid">
+            <input required name="recipientName" placeholder="Full name">
+            <input required name="recipientPhone" placeholder="Phone number">
+            <input required name="recipientAddress" class="wide" placeholder="House / Building / Street / Locality">
+            <input required name="recipientCity" placeholder="City">
+            <input required name="recipientState" placeholder="State">
+            <input required name="recipientPin" placeholder="PIN code">
+            <input name="deliveryNote" placeholder="Delivery note (optional)">
+          </div>
+          <button type="button" class="primary-btn full next-step">CONTINUE <span>→</span></button>
+        </div>
+        <div class="form-step" data-step="2">
+          <h3>02 / YOUR PRIVATE DETAILS</h3>
+          <div class="privacy-note"><b>WHY DO WE NEED THIS?</b><p>If they Puke Back, we need to know where to send it. Your details are never shown to the recipient.</p></div>
+          <div class="form-grid">
+            <input required name="senderName" placeholder="Full name">
+            <input required name="senderPhone" placeholder="Phone number">
+            <input required type="email" name="senderEmail" placeholder="Email">
+            <input required name="senderAddress" class="wide" placeholder="Full return address">
+          </div>
+          <button type="button" class="primary-btn full next-step">REVIEW & PAY <span>→</span></button>
+        </div>
+        <div class="form-step" data-step="3">
+          <h3>03 / CHECKOUT</h3>
+          <div class="checkout-summary">
+            <div><span>THE ORIGINAL PUKE × <b id="checkoutOranges">1</b></span><strong id="checkoutPrice">₹199</strong></div>
+            <div><span>STANDARD SHIPPING</span><strong>INCLUDED</strong></div>
+            <div class="total"><span>TOTAL</span><strong id="checkoutTotal">₹199</strong></div>
+          </div>
+          <div class="payment-tabs">
+            <button type="button" class="active" data-pay="upi">UPI</button>
+            <button type="button" data-pay="card">CARD</button>
+          </div>
+          <div class="payment-method active" id="upiPayment">
+            <label>UPI ID</label>
+            <input id="upiId" placeholder="name@upi">
+            <div class="quick-upi"><button type="button">GPay</button><button type="button">PhonePe</button><button type="button">Paytm</button></div>
+          </div>
+          <div class="payment-method" id="cardPayment">
+            <label>CARD DETAILS</label>
+            <input id="cardNumber" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
+            <div class="card-row"><input id="cardExpiry" maxlength="5" placeholder="MM/YY"><input id="cardCvv" maxlength="3" placeholder="CVV"></div>
+          </div>
+          <div class="demo-payment mono">DEMO PAYMENT · NO REAL CHARGE</div>
+          <div id="paymentError" class="payment-error"></div>
+          <button type="submit" class="primary-btn full" id="payNowBtn">PAY NOW <span>↗</span></button>
+        </div>
+      </form>
+      <div class="success-screen" id="successScreen">
+        <div class="success-mark">✓</div>
+        <div class="mono" id="successVerifiedText">PAYMENT VERIFIED / IDENTITY HIDDEN</div>
+        <h2>YOUR PUKE<br>IS <span>REAL.</span></h2>
+        <p>Recipient Puke Code</p>
+        <div class="generated-code" id="generatedCode">PK-XXXXXX</div>
+        <p class="small">The recipient uses this code to Puke Back, report, or block future Pukes. Your private tracking ID is separate.</p>
+        <div class="tracking-id mono" id="trackingId">ORDER: ORD-XXXXXX</div>
+        <button type="button" class="outline-btn" id="successCloseBtn">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-panel auth-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">PUKE IDENTITY / SECURED ACCESS</div>
+      <h2 id="authHeading">WELCOME<br><span>BACK.</span></h2>
+      <div class="auth-tabs">
+        <button type="button" class="active" data-auth-tab="signin">SIGN IN</button>
+        <button type="button" data-auth-tab="signup">SIGN UP</button>
+      </div>
+      <form id="signinForm" class="auth-form active">
+        <input required type="email" id="signinEmail" placeholder="Email address">
+        <input required type="password" id="signinPassword" placeholder="Password">
+        <button class="primary-btn full" type="submit">SIGN IN <span>→</span></button>
+      </form>
+      <form id="signupForm" class="auth-form">
+        <input required id="signupName" placeholder="Full name">
+        <input required type="email" id="signupEmail" placeholder="Email address">
+        <input required type="password" id="signupPassword" placeholder="Create password">
+        <button class="primary-btn full" type="submit">CREATE ACCOUNT <span>→</span></button>
+      </form>
+      <p class="auth-note">Accounts are optional. You can still send a Puke as a guest.</p>
+      <div id="authNotice" class="recipient-notice"></div>
+    </div>
+  </div>
+
+  <!-- Got puked modal -->
+  <div class="modal" id="codeModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">PUKE NETWORK / RECIPIENT ACCESS</div>
+      <h2>YOU GOT<br><span>PUKED.</span></h2>
+      <p>Enter the code from the card inside your box.</p>
+      <input class="code-input" id="codeInput" placeholder="PK-XXXXXX" maxlength="9">
+      <button class="primary-btn full" id="findPuke">FIND CONNECTION <span>→</span></button>
+      <div class="demo-hint mono">ENTER YOUR CODE (E.G. PK-8X4F2A)</div>
+      <div id="codeModalError" class="payment-error" style="margin-top: 15px;"></div>
+    </div>
+  </div>
+
+  <!-- Recipient action modal -->
+  <div class="modal" id="recipientModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="connection-ok mono">● PUKE CONNECTION FOUND</div>
+      <h2>YOUR<br><span>MOVE.</span></h2>
+      <p>We know where your Puke needs to go. You don't need to.</p>
+      <button class="primary-btn full" id="pukeBackBtn">PUKE BACK TO THIS SENDER — ₹199 <span>↗</span></button>
+      <div class="recipient-actions">
+        <button id="openReportBtn">REPORT THIS PUKE</button>
+        <button id="blockBtn">BLOCK THIS SENDER</button>
+        <button id="openOptOutBtn">OPT OUT OF ALL FUTURE PUKES</button>
+      </div>
+      <div id="recipientNotice" class="recipient-notice"></div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div class="modal" id="reportModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">PUKE SHIELD / COMPLAINT SYSTEM</div>
+      <h2>REPORT THIS <span>PUKE.</span></h2>
+      <p style="margin-bottom: 20px;">Your report will be sent directly to our moderation dashboard.</p>
+      
+      <select id="reportReason" class="report-select">
+        <option value="" disabled selected>Select a reason...</option>
+        <option value="threat">Threat or intimidation</option>
+        <option value="harassment">Harassment</option>
+        <option value="hate">Hate or discrimination</option>
+        <option value="sexual">Sexual/inappropriate content</option>
+        <option value="personal_info">Personal information</option>
+        <option value="spam">Spam</option>
+        <option value="other">Other</option>
+      </select>
+
+      <textarea id="reportDescription" class="reply-textarea" placeholder="Add further details (optional)..." style="height: 100px; margin-bottom: 20px;"></textarea>
+      
+      <button class="primary-btn full" id="submitReportBtn">SUBMIT REPORT <span>→</span></button>
+      <div id="reportNotice" class="recipient-notice"></div>
+    </div>
+  </div>
+
+  <!-- Opt Out Modal (OTP Verification representation) -->
+  <div class="modal" id="optOutModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">SUPPRESSION LIST</div>
+      <h2>STOP <span>PUKES.</span></h2>
+      <p>Enter your phone number to suppress future deliveries.</p>
+      
+      <div id="optOutPhoneStep">
+        <input class="code-input" id="optOutPhone" placeholder="Phone Number" style="font-size: 1.5rem; text-align: left; padding: 15px;">
+        <button class="primary-btn full" id="sendOtpBtn" style="margin-top: 15px;">SEND OTP <span>→</span></button>
+      </div>
+
+      <div id="optOutOtpStep" style="display: none;">
+        <p style="color: #ff5a00; font-size: 12px; margin: 15px 0 5px;" class="mono">● SIMULATED OTP SENT: <b>4209</b></p>
+        <input class="code-input" id="optOutOtp" placeholder="XXXX" maxlength="4">
+        <button class="primary-btn full" id="verifyOtpBtn">VERIFY & OPT OUT <span>✓</span></button>
+      </div>
+
+      <div id="optOutNotice" class="recipient-notice"></div>
+    </div>
+  </div>
+
+  <!-- Puke Back Modal -->
+  <div class="modal" id="pukeBackModal">
+    <div class="modal-panel large">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">ANONYMOUS RETURN ROUTE / CONNECTED</div>
+      <h2>PUKE<br><span>BACK.</span></h2>
+      <div class="linked-route">
+        <div><span>DESTINATION</span><strong>ORIGINAL SENDER</strong></div>
+        <div><span>IDENTITY</span><strong>HIDDEN</strong></div>
+        <div><span>ADDRESS</span><strong>SECURELY LINKED ✓</strong></div>
+      </div>
+      <p class="reply-explain">You do not need their address. This reply is securely linked to the original Puke Code and will be routed back to the original sender.</p>
+      <label class="field-label">YOUR REPLY MESSAGE</label>
+      <textarea id="replyMessage" class="reply-textarea" maxlength="1200" placeholder="Write what you want to send back..."></textarea>
+      <div class="reply-fit"><span id="replyChars">0 characters</span><strong id="replyEstimate">1 ORANGE · ₹199</strong></div>
+      <button class="primary-btn full" id="replyCheckoutBtn">CONTINUE TO PUKE-BACK PAYMENT <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- Shorten Suggestion Modal -->
+  <div class="modal" id="shortenModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">AI MESSAGING ASSISTANT</div>
+      <h2>SHORTEN WITH <span>AI.</span></h2>
+      <p style="margin: 15px 0;">We've optimized your message to fit on fewer oranges while preserving its core meaning.</p>
+      
+      <div class="privacy-note" style="border-left-color: #555;">
+        <b>ORIGINAL VERSION:</b>
+        <p id="originalTextShow" style="margin: 5px 0 0; font-size: 13px; color: #aaa;"></p>
+      </div>
+
+      <div class="privacy-note" style="border-left-color: #ff5a00; background: #1c130d;">
+        <b style="color: #ff5a00;">AI SUGGESTED VERSION:</b>
+        <p id="shortenedTextShow" style="margin: 5px 0 0; font-size: 13px; color: #f3efe7; font-weight: 500;"></p>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="primary-btn" id="acceptShortenBtn" style="flex: 1;">USE AI VERSION <span>✓</span></button>
+        <button class="outline-btn" id="rejectShortenBtn" style="flex: 1; justify-content: center;">KEEP MY VERSION</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tracking Modal -->
+  <div class="modal" id="trackModal">
+    <div class="modal-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">ORDER TRACKING MODULE</div>
+      <h2>TRACK YOUR <span>PUKE.</span></h2>
+      <p>Enter your private tracking ID (ORD-XXXXXX) below.</p>
+      <input class="code-input" id="trackInput" placeholder="ORD-XXXXXX" maxlength="10">
+      <button class="primary-btn full" id="findTracking">TRACK ORDER <span>→</span></button>
+      
+      <div id="trackingResult" style="display: none; margin-top: 30px;">
+        <div class="connection-ok mono" style="color: #ff5a00; margin-bottom: 20px; font-weight: bold;">● STATUS: <span id="trackStatusText">PLACED</span></div>
+        <div class="tracking-steps" style="display: flex; flex-direction: column; gap: 15px; border-left: 2px solid #333; padding-left: 20px; margin-left: 10px; text-align: left;">
+          <div class="t-step" id="t-step-placed"><b>ORDER PLACED</b><p style="font-size: 11px; color: #777; margin: 0;">We've received your feelings.</p></div>
+          <div class="t-step" id="t-step-preparing"><b>PREPARING YOUR PUKE</b><p style="font-size: 11px; color: #777; margin: 0;">Writing your message on the orange.</p></div>
+          <div class="t-step" id="t-step-dispatched"><b>PUKE DISPATCHED</b><p style="font-size: 11px; color: #777; margin: 0;">Courier has picked up the box.</p></div>
+          <div class="t-step" id="t-step-delivered"><b>PUKE DELIVERED</b><p style="font-size: 11px; color: #777; margin: 0;">Box has reached the destination.</p></div>
+          <div class="t-step" id="t-step-waiting"><b>WAITING FOR A RESPONSE</b><p style="font-size: 11px; color: #777; margin: 0;">The recipient is looking at the orange...</p></div>
+          <div class="t-step" id="t-step-puked_back"><b>THEY PUKED BACK.</b><p style="font-size: 11px; color: #ff5a00; margin: 0; font-weight: bold; text-transform: uppercase;">THEY PUKED BACK.</p></div>
+        </div>
+      </div>
+      <div id="trackError" class="payment-error" style="margin-top: 15px;"></div>
+    </div>
+  </div>
+
+  <!-- User Dashboard Modal -->
+  <div class="modal" id="dashboardModal">
+    <div class="modal-panel large">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-kicker mono">USER DASHBOARD PORTAL</div>
+      <h2>YOUR <span>BAGGAGE.</span></h2>
+      <div class="privacy-note">
+        <b id="dbUserName" style="font-size: 13px; text-transform: uppercase;">USER</b>
+        <p id="dbUserEmail" style="margin: 3px 0 0; font-size: 11px; color: #aaa;"></p>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <h3 class="mono" style="font-size: 12px; color: #ff5a00; border-bottom: 1px solid #333; padding-bottom: 8px;">SENT PUKES</h3>
+        <div id="dbSentList" style="margin-top: 10px; max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+          <p class="mono" style="color: #555; font-size: 11px;">No sent Pukes found.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <h3 class="mono" style="font-size: 12px; color: #ff5a00; border-bottom: 1px solid #333; padding-bottom: 8px;">RECEIVED PUKES</h3>
+        <div id="dbReceivedList" style="margin-top: 10px; max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+          <p class="mono" style="color: #555; font-size: 11px;">No received Pukes found.</p>
+        </div>
+      </div>
+
+      <button class="outline-btn full" id="dbSignOutBtn" style="margin-top: 30px; justify-content: center;">SIGN OUT</button>
+    </div>
+  </div>
+
+  <!-- Space modal -->
+  <div class="modal" id="spaceModal">
+    <div class="modal-panel chat-panel">
+      <button class="modal-close" data-close>×</button>
+      <div class="chat-top"><span class="mono" id="chatMode">PUKE SPACE</span><span class="online" id="chatStatus">● BETA</span></div>
+      <div class="identity" id="fruitIdentity">CONNECTING...</div>
+      <div class="chat-log" id="chatLog">
+        <div class="system-message">You’re anonymous here. Don’t share personal information. Be human.</div>
+      </div>
+      <div class="chat-compose">
+        <input id="chatInput" placeholder="Puke something out..." disabled>
+        <button id="sendChat" disabled>↑</button>
+      </div>
+      <div class="chat-safety mono" id="chatFooter">AI IS NOT PROFESSIONAL MENTAL-HEALTH CARE</div>
+    </div>
+  </div>
+
+  <!-- Socket.io client JS -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    // Global variables
+    let windowActivePukeCode = null;
+    let windowParentPukeCode = null;
+    let socket = null;
+    let chatTimer = null;
+    let activeChatMode = null; // 'ai' or 'socket'
+    let chatHistory = [];
+
+    // Boot Loader Page
+    window.addEventListener("DOMContentLoaded", () => {
+      let p = 0;
+      const statuses = ["HIDING IDENTITY...", "PACKING FEELINGS...", "BUBBLE-WRAPPING BAGGAGE...", "READY TO PUKE."];
+      const timer = setInterval(() => {
+        p += Math.floor(Math.random()*13)+5;
+        if(p >= 100) p = 100;
+        $("#loaderBar").style.width = p+"%";
+        $("#loaderPercent").textContent = p+"%";
+        $("#loaderStatus").textContent = statuses[Math.min(3, Math.floor(p/26))];
+        if(p === 100){
+          clearInterval(timer);
+          setTimeout(()=>$("#loader").classList.add("hide"), 450);
+        }
+      }, 90);
+
+      checkLoginStatus();
+    });
+
+    // Handle Parallax Orange
+    document.addEventListener("mousemove", e => {
+      const c = $("#cursor");
+      c.style.left = e.clientX+"px"; c.style.top = e.clientY+"px";
+      const orange = $("#heroOrange");
+      if(orange){
+        const x = (e.clientX/window.innerWidth - .5)*18;
+        const y = (e.clientY/window.innerHeight - .5)*-18;
+        orange.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+      }
+    });
+
+    // Puke Fit live calculation
+    const message = $("#message");
+    let currentOranges = 1, currentPrice = 199;
+    function updateFit(){
+      const len = message.value.trim().length;
+      const CAPACITY = 28;
+      $("#charCount").textContent = len;
+      currentOranges = Math.max(1, Math.ceil(len / CAPACITY));
+      currentPrice = currentOranges === 1 ? 199 : 199 + 49 + Math.max(0, currentOranges - 2) * 29;
+      const used = len === 0 ? 0 : ((len - 1) % CAPACITY) + 1;
+      const within = len === 0 ? 0 : Math.round((used / CAPACITY) * 100);
+      $("#fitBar").style.width = within+"%";
+      $("#fitScore").textContent = within+"%";
+      $("#orangeCount").textContent = currentOranges;
+      $("#price").textContent = "₹"+currentPrice;
+
+      if (len > CAPACITY) {
+        $("#shortenBtn").style.display = "inline-block";
+      } else {
+        $("#shortenBtn").style.display = "none";
+      }
+
+      if(len===0){$("#fitTitle").textContent="START TYPING";$("#fitMessage").textContent="One orange fits approximately one short handwritten line."}
+      else if(currentOranges===1){$("#fitTitle").textContent="FITS ON 1 ORANGE";$("#fitMessage").textContent=(CAPACITY-len)+" characters of estimated handwriting space left."}
+      else{$("#fitTitle").textContent="NEEDS ~"+currentOranges+" ORANGES";$("#fitMessage").textContent=currentOranges===2?"Your message needs a second orange. +₹49.":"Estimated "+currentOranges+" oranges. Each orange after the second adds ₹29."}
+    }
+    message.addEventListener("input", updateFit);
+
+    // Modal Control
+    function openModal(id){
+      closeModals(false);
+      $("#"+id).classList.add("open");
+      document.body.style.overflow="hidden";
+    }
+    function closeModals(restoreOverflow = true){
+      $$(".modal").forEach(m=>m.classList.remove("open"));
+      if (restoreOverflow) document.body.style.overflow="";
+      
+      if (socket) {
+        socket.emit("leave_chat");
+        socket.disconnect();
+        socket = null;
+      }
+      if (chatTimer) {
+        clearTimeout(chatTimer);
+        chatTimer = null;
+      }
+    }
+    $$("[data-open]").forEach(b=>b.addEventListener("click",()=>{
+      if (b.classList.contains("auth-nav") && localStorage.getItem("pukeToken")) {
+        loadUserDashboard();
+      } else {
+        openModal(b.dataset.open);
+      }
+    }));
+    $$("[data-close]").forEach(b=>b.addEventListener("click", () => closeModals(true)));
+    $$(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModals(true)}));
+
+    // Shorten with AI
+    $("#shortenBtn").addEventListener("click", async () => {
+      const text = message.value.trim();
+      if (!text) return;
+      
+      try {
+        $("#shortenBtn").textContent = "SHORTENING...";
+        $("#shortenBtn").disabled = true;
+
+        const res = await fetch("/api/orders/shorten", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+          $("#originalTextShow").textContent = text;
+          $("#shortenedTextShow").textContent = data.shortened;
+          openModal("shortenModal");
+        }
+      } catch (err) {
+        console.log("Shorten API failure", err);
+      } finally {
+        $("#shortenBtn").textContent = "SHORTEN WITH AI ✦";
+        $("#shortenBtn").disabled = false;
+      }
+    });
+
+    // Accept AI version
+    $("#acceptShortenBtn").addEventListener("click", () => {
+      message.value = $("#shortenedTextShow").textContent;
+      updateFit();
+      closeModals(true);
+    });
+
+    $("#rejectShortenBtn").addEventListener("click", () => {
+      closeModals(true);
+    });
+
+    // Continue order
+    $("#continueOrder").addEventListener("click",()=>{
+      if(!message.value.trim()){message.focus();message.placeholder="You have to Puke something first...";return}
+      $("#checkoutOranges").textContent=currentOranges;
+      $("#checkoutPrice").textContent="₹"+currentPrice;
+      $("#checkoutTotal").textContent="₹"+currentPrice;
+      openModal("orderModal");
+    });
+
+    // Multi-step form
+    let step=1;
+    $$(".next-step").forEach(btn=>btn.addEventListener("click",()=>{
+      const current=$(`.form-step[data-step="${step}"]`);
+      const inputs=[...current.querySelectorAll("[required]")];
+      if(inputs.some(i=>!i.value.trim())){inputs.find(i=>!i.value.trim()).focus();return}
+      current.classList.remove("active"); step++; $(`.form-step[data-step="${step}"]`).classList.add("active");
+      $$(".progress span").forEach((s,i)=>s.classList.toggle("active",i<step));
+    }));
+
+    // Submit Order
+    $("#orderForm").addEventListener("submit", async e=>{
+      e.preventDefault();
+      const err=$("#paymentError");
+      if(selectedPayment==="upi" && !$("#upiId").value.trim()){err.textContent="Enter a UPI ID or choose a demo UPI app.";err.style.display="block";return}
+      if(selectedPayment==="card" && ($("#cardNumber").value.replace(/\s/g,"").length<16 || $("#cardExpiry").value.length<5 || $("#cardCvv").value.length<3)){err.textContent="Enter complete demo card details.";err.style.display="block";return}
+      err.style.display="none";
+
+      $("#payNowBtn").textContent="PROCESSING PAYMENT...";
+      $("#payNowBtn").disabled=true;
+
+      const formData = new FormData($("#orderForm"));
+      const payload = {
+        sender: {
+          name: formData.get("senderName"),
+          phone: formData.get("senderPhone"),
+          email: formData.get("senderEmail"),
+          address: formData.get("senderAddress")
+        },
+        recipient: {
+          name: formData.get("recipientName"),
+          phone: formData.get("recipientPhone"),
+          house: formData.get("recipientAddress"),
+          street: formData.get("recipientAddress"),
+          city: formData.get("recipientCity"),
+          state: formData.get("recipientState"),
+          pin: formData.get("recipientPin"),
+          instructions: formData.get("deliveryNote")
+        },
+        message: message.value.trim(),
+        parentPukeCode: windowParentPukeCode
+      };
+
+      try {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          $("#generatedCode").textContent = data.pukeCode;
+          $("#trackingId").textContent = "ORDER: " + data.orderId;
+          
+          if (data.moderationStatus === "pending") {
+            $("#successVerifiedText").innerHTML = "PAYMENT VERIFIED / <span style='color: #ffaa00;'>FLAGGED FOR MODERATION</span>";
+          } else {
+            $("#successVerifiedText").textContent = "PAYMENT VERIFIED / IDENTITY HIDDEN";
+          }
+
+          $("#orderForm").style.display="none";
+          $(".progress").style.display="none";
+          $("#successScreen").classList.add("show");
+
+          message.value = "";
+          updateFit();
+          windowParentPukeCode = null;
+        } else {
+          err.textContent = data.message || "Failed to place order.";
+          err.style.display = "block";
+          $("#payNowBtn").textContent = "PAY NOW ↗";
+          $("#payNowBtn").disabled = false;
+        }
+      } catch (err) {
+        err.textContent = "Server connection lost. Try again later.";
+        err.style.display = "block";
+        $("#payNowBtn").textContent = "PAY NOW ↗";
+        $("#payNowBtn").disabled = false;
+      }
+    });
+
+    $("#successCloseBtn").addEventListener("click", () => {
+      $("#orderForm").style.display = "block";
+      $(".progress").style.display = "flex";
+      $("#successScreen").classList.remove("show");
+      step = 1;
+      $$(".form-step").forEach((fs, i) => {
+        fs.classList.toggle("active", i === 0);
+      });
+      $$(".progress span").forEach((s, i) => {
+        s.classList.toggle("active", i === 0);
+      });
+      closeModals(true);
+    });
+
+    // Got Puked code lookup
+    $("#findPuke").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const input=$("#codeInput");
+      const err = $("#codeModalError");
+      err.style.display = "none";
+      let v=input.value.trim().toUpperCase().replace(/\s+/g,"");
+      
+      if(!v){input.style.borderColor="#ff5a00";input.placeholder="ENTER A PUKE CODE";return}
+      if(!v.startsWith("PK-")) v="PK-"+v.replace(/^PK/,"").replace(/-/g,"");
+      input.value=v;
+      input.style.borderColor="#333";
+
+      try {
+        const res = await fetch(`/api/orders/got-puked/${v}`);
+        const data = await res.json();
+
+        if (res.ok && data.found) {
+          windowActivePukeCode = v;
+          $("#codeModal").classList.remove("open");
+          $("#recipientNotice").style.display = "none";
+          openModal("recipientModal");
+        } else {
+          err.textContent = data.message || "Puke Code not found.";
+          err.style.display = "block";
+        }
+      } catch (err) {
+        err.textContent = "Database connection error.";
+        err.style.display = "block";
+      }
+    });
+
+    $("#pukeBackBtn").addEventListener("click",()=>{
+      $("#recipientModal").classList.remove("open");
+      $("#replyMessage").value = "";
+      $("#replyChars").textContent = "0 characters";
+      $("#replyEstimate").textContent = "1 ORANGE · ₹199";
+      openModal("pukeBackModal");
+    });
+
+    // Report complaints
+    $("#openReportBtn").addEventListener("click", () => {
+      $("#reportNotice").style.display = "none";
+      $("#reportReason").value = "";
+      $("#reportDescription").value = "";
+      openModal("reportModal");
+    });
+
+    $("#submitReportBtn").addEventListener("click", async () => {
+      const reason = $("#reportReason").value;
+      const description = $("#reportDescription").value.trim();
+      const notice = $("#reportNotice");
+      notice.style.display = "none";
+
+      if (!reason) {
+        notice.textContent = "Please select a reason.";
+        notice.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/shield/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            pukeCode: windowActivePukeCode,
+            reason,
+            description
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          notice.textContent = "Report submitted successfully to the moderation queue.";
+          notice.style.display = "block";
+          setTimeout(() => closeModals(true), 2000);
+        } else {
+          notice.textContent = data.message || "Failed to submit report.";
+          notice.style.display = "block";
+        }
+      } catch (err) {
+        notice.textContent = "Connection error.";
+        notice.style.display = "block";
+      }
+    });
+
+    // Block sender
+    $("#blockBtn").onclick = async () => {
+      const notice=$("#recipientNotice");
+      try {
+        const res = await fetch("/api/shield/block", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pukeCode: windowActivePukeCode })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          notice.textContent = "This anonymous sender has been blocked from sending future Pukes to you.";
+          notice.style.display = "block";
+          setTimeout(() => closeModals(true), 2500);
+        } else {
+          notice.textContent = data.message || "Failed to block sender.";
+          notice.style.display = "block";
+        }
+      } catch (err) {
+        notice.textContent = "Connection error.";
+        notice.style.display = "block";
+      }
+    };
+
+    // Opt-out requests
+    $("#openOptOutBtn").addEventListener("click", () => {
+      $("#optOutNotice").style.display = "none";
+      $("#optOutPhone").value = "";
+      $("#optOutOtp").value = "";
+      $("#optOutPhoneStep").style.display = "block";
+      $("#optOutOtpStep").style.display = "none";
+      openModal("optOutModal");
+    });
+
+    $("#sendOtpBtn").addEventListener("click", () => {
+      const phone = $("#optOutPhone").value.trim();
+      const notice = $("#optOutNotice");
+      if (!phone) {
+        notice.textContent = "Phone number is required.";
+        notice.style.display = "block";
+        return;
+      }
+      notice.style.display = "none";
+      $("#optOutPhoneStep").style.display = "none";
+      $("#optOutOtpStep").style.display = "block";
+    });
+
+    $("#verifyOtpBtn").addEventListener("click", async () => {
+      const otp = $("#optOutOtp").value.trim();
+      const phone = $("#optOutPhone").value.trim();
+      const notice = $("#optOutNotice");
+      notice.style.display = "none";
+
+      if (otp !== "4209") {
+        notice.textContent = "Invalid verification code. Try 4209.";
+        notice.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/shield/opt-out", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          notice.textContent = "Opt-out verified. Your phone has been added to the suppression list.";
+          notice.style.display = "block";
+          setTimeout(() => closeModals(true), 2500);
+        } else {
+          notice.textContent = data.message || "Opt-out failed.";
+          notice.style.display = "block";
+        }
+      } catch (err) {
+        notice.textContent = "Connection error.";
+        notice.style.display = "block";
+      }
+    });
+
+    // Puke Back reply redirection
+    const replyMessage=$("#replyMessage");
+    replyMessage.addEventListener("input",()=>{
+      const len=replyMessage.value.trim().length, count=Math.max(1,Math.ceil(len/28));
+      const price=count===1?199:199+49+Math.max(0,count-2)*29;
+      $("#replyChars").textContent=len+" characters";
+      $("#replyEstimate").textContent=count+" ORANGE"+(count>1?"S":"")+" · ₹"+price;
+    });
+
+    $("#replyCheckoutBtn").addEventListener("click",()=>{
+      const text = replyMessage.value.trim();
+      if(!text){replyMessage.focus();return}
+      
+      message.value=text; 
+      updateFit();
+
+      $("#checkoutOranges").textContent=currentOranges;
+      $("#checkoutPrice").textContent="₹"+currentPrice;
+      $("#checkoutTotal").textContent="₹"+currentPrice;
+      
+      windowParentPukeCode = windowActivePukeCode;
+
+      $("#pukeBackModal").classList.remove("open"); 
+      openModal("orderModal");
+
+      step=3; 
+      $$(".form-step").forEach(s=>s.classList.remove("active")); 
+      $(`.form-step[data-step="3"]`).classList.add("active");
+      $$(".progress span").forEach((s,i)=>s.classList.toggle("active",i<3));
+
+      const form = $("#orderForm");
+      form.recipientName.value = "Original Sender";
+      form.recipientPhone.value = "0000000000";
+      form.recipientAddress.value = "Secure Route Linked";
+      form.recipientCity.value = "Linked";
+      form.recipientState.value = "Linked";
+      form.recipientPin.value = "000000";
+      form.senderName.value = "Original Recipient";
+      form.senderPhone.value = "0000000000";
+      form.senderEmail.value = "secure@pukeit.com";
+      form.senderAddress.value = "Secure Route Linked";
+
+      const note=document.createElement("div");
+      note.className="privacy-note";
+      note.innerHTML="<b>PUKE-BACK ROUTE CONNECTED ✓</b><p>Destination is securely linked to the original sender. Their address remains hidden.</p>";
+      const checkout=$(".checkout-summary"); 
+      if(!$("#orderModal .puke-back-note")){
+        note.classList.add("puke-back-note");
+        checkout.parentNode.insertBefore(note,checkout);
+      }
+    });
+
+    // Tracking
+    $("#findTracking").addEventListener("click", async () => {
+      const id = $("#trackInput").value.trim().toUpperCase();
+      const err = $("#trackError");
+      const result = $("#trackingResult");
+      
+      err.style.display = "none";
+      result.style.display = "none";
+
+      if (!id) {
+        err.textContent = "Please enter a tracking ID.";
+        err.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/orders/track/${id}`);
+        const data = await res.json();
+
+        if (res.ok) {
+          $("#trackStatusText").textContent = data.status.toUpperCase();
+          
+          $$(".t-step").forEach(step => {
+            step.style.opacity = "0.3";
+            step.style.color = "#888";
+          });
+
+          const stepOrder = ["placed", "preparing", "dispatched", "delivered", "waiting", "puked_back"];
+          const currentIdx = stepOrder.indexOf(data.status);
+          
+          for (let i = 0; i <= currentIdx; i++) {
+            const el = $(`#t-step-${stepOrder[i]}`);
+            if (el) {
+              el.style.opacity = "1";
+              el.style.color = "#f3efe7";
+              if (stepOrder[i] === "puked_back") {
+                el.style.color = "#ff5a00";
+              }
+            }
+          }
+
+          result.style.display = "block";
+        } else {
+          err.textContent = data.message || "Invalid tracking ID.";
+          err.style.display = "block";
+        }
+      } catch (e) {
+        err.textContent = "Connection error.";
+        err.style.display = "block";
+      }
+    });
+
+    // User authentication
+    $$("[data-auth-tab]").forEach(btn=>btn.addEventListener("click",()=>{
+      $$("[data-auth-tab]").forEach(b=>b.classList.toggle("active",b===btn));
+      const signup=btn.dataset.authTab==="signup";
+      $("#signinForm").classList.toggle("active",!signup);$("#signupForm").classList.toggle("active",signup);
+      $("#authHeading").innerHTML=signup?'JOIN THE<br><span>MESS.</span>':'WELCOME<br><span>BACK.</span>';
+      $("#authNotice").style.display="none";
+    }));
+
+    $("#signinForm").addEventListener("submit", async e=>{
+      e.preventDefault();
+      const notice = $("#authNotice");
+      notice.style.display = "none";
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: $("#signinEmail").value.trim(),
+            password: $("#signinPassword").value
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem("pukeToken", data.token);
+          notice.textContent = "Signed in successfully.";
+          notice.style.display = "block";
+          checkLoginStatus();
+          setTimeout(() => closeModals(true), 1000);
+        } else {
+          notice.textContent = data.message || "Wrong credentials.";
+          notice.style.display = "block";
+        }
+      } catch (err) {
+        notice.textContent = "Auth connection error.";
+        notice.style.display = "block";
+      }
+    });
+
+    $("#signupForm").addEventListener("submit", async e=>{
+      e.preventDefault();
+      const notice = $("#authNotice");
+      notice.style.display = "none";
+
+      try {
+        const res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: $("#signupName").value.trim(),
+            email: $("#signupEmail").value.trim(),
+            password: $("#signupPassword").value
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem("pukeToken", data.token);
+          notice.textContent = "Account created successfully.";
+          notice.style.display = "block";
+          checkLoginStatus();
+          setTimeout(() => closeModals(true), 1000);
+        } else {
+          notice.textContent = data.message || "Failed to create account.";
+          notice.style.display = "block";
+        }
+      } catch (err) {
+        notice.textContent = "Auth connection error.";
+        notice.style.display = "block";
+      }
+    });
+
+    function checkLoginStatus() {
+      const token = localStorage.getItem("pukeToken");
+      const btn = $("#navAuthBtn");
+      if (token) {
+        btn.textContent = "DASHBOARD";
+        btn.dataset.open = "dashboardModal";
+      } else {
+        btn.textContent = "SIGN IN";
+        btn.dataset.open = "authModal";
+      }
+    }
+
+    async function loadUserDashboard() {
+      const token = localStorage.getItem("pukeToken");
+      if (!token) return;
+
+      try {
+        const res = await fetch("/api/auth/me", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          $("#dbUserName").textContent = "HELLO, " + data.user.name;
+          $("#dbUserEmail").textContent = data.user.email;
+
+          const sentList = $("#dbSentList");
+          if (data.sentPukes && data.sentPukes.length > 0) {
+            sentList.innerHTML = data.sentPukes.map(p => `
+              <div style="border: 1px solid #333; padding: 10px; background: #0c0c0c;">
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#ff5a00;" class="mono">
+                  <span>${p.orderId}</span>
+                  <span>${p.status.toUpperCase()}</span>
+                </div>
+                <p style="margin: 6px 0; font-size: 12px; color: #f3efe7;">"${p.message}"</p>
+                <div style="font-size: 9px; color:#555; display:flex; justify-content:space-between;" class="mono">
+                  <span>ORANGES: ${p.orangesCount}</span>
+                  <span>PK CODE: ${p.pukeCode}</span>
+                </div>
+              </div>
+            `).join("");
+          } else {
+            sentList.innerHTML = `<p class="mono" style="color: #555; font-size: 11px;">No sent Pukes found.</p>`;
+          }
+
+          const receivedList = $("#dbReceivedList");
+          if (data.receivedPukes && data.receivedPukes.length > 0) {
+            receivedList.innerHTML = data.receivedPukes.map(p => `
+              <div style="border: 1px solid #333; padding: 10px; background: #0c0c0c;">
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#ff5a00;" class="mono">
+                  <span>RECEIVED PUKE</span>
+                  <span>${p.status.toUpperCase()}</span>
+                </div>
+                <p style="margin: 6px 0; font-size: 12px; color: #f3efe7;">"${p.message}"</p>
+                <div style="font-size: 9px; color:#555;" class="mono">
+                  <span>PK CODE: ${p.pukeCode}</span>
+                </div>
+              </div>
+            `).join("");
+          } else {
+            receivedList.innerHTML = `<p class="mono" style="color: #555; font-size: 11px;">No received Pukes found.</p>`;
+          }
+
+          openModal("dashboardModal");
+        } else {
+          localStorage.removeItem("pukeToken");
+          checkLoginStatus();
+          openModal("authModal");
+        }
+      } catch (err) {
+        console.log("Error loading dashboard", err);
+      }
+    }
+
+    $("#dbSignOutBtn").addEventListener("click", () => {
+      localStorage.removeItem("pukeToken");
+      checkLoginStatus();
+      closeModals(true);
+    });
+
+    // Puke Space matchmaker and chatbot companion
+    $$(".space-card").forEach(card=>card.addEventListener("click",()=>{
+      const mode = card.dataset.mode;
+      activeChatMode = mode;
+      chatHistory = [];
+      
+      $("#chatLog").innerHTML='<div class="system-message">You’re anonymous here. Don’t share personal information. Be human.</div>';
+      $("#chatInput").disabled = true;
+      $("#sendChat").disabled = true;
+
+      if(mode==="ai") {
+        $("#fruitIdentity").textContent="PUKE AI";
+        $("#chatMode").textContent="PUKE AI / COMPANION MODE";
+        $("#chatLog").innerHTML+='<div class="bubble">Hey. I’m Puke AI. I’ll actually respond to what you tell me and help you unpack it or put it into words. What’s on your mind?</div>';
+        
+        chatHistory.push({ role: "model", parts: [{ text: "Hey. I’m Puke AI. I’ll actually respond to what you tell me and help you unpack it or put it into words. What’s on your mind?" }] });
+        
+        $("#chatInput").disabled = false;
+        $("#sendChat").disabled = false;
+        openModal("spaceModal");
+      } else {
+        $("#fruitIdentity").textContent="MATCHING...";
+        $("#chatMode").textContent = `PUKE SPACE / ${mode.toUpperCase()} MODE`;
+        $("#chatLog").innerHTML+='<div class="system-message" id="queueStatus">Connecting to matchmaking server...</div>';
+        openModal("spaceModal");
+
+        connectSocket(mode);
+      }
+    }));
+
+    function connectSocket(mode) {
+      socket = io();
+
+      socket.on("connect", () => {
+        socket.emit("join_queue", { mode });
+      });
+
+      socket.on("queueing", (data) => {
+        $("#fruitIdentity").textContent = data.yourName;
+        $("#queueStatus").textContent = "LOOKING FOR A STRANGER... PLEASE WAIT.";
+        
+        chatTimer = setTimeout(() => {
+          $("#chatLog").innerHTML += `<div class="system-message" style="color: #ff5a00;">NO STRANGER FOUND. <button class="outline-btn" style="padding: 5px 10px; font-size: 10px; display: inline-block; margin-left: 10px;" onclick="switchToAiMode()">TALK TO PUKE AI</button></div>`;
+        }, 10000);
+      });
+
+      socket.on("match_found", (data) => {
+        if (chatTimer) clearTimeout(chatTimer);
+        
+        $("#fruitIdentity").textContent = data.yourName;
+        $("#chatStatus").textContent = "● CONNECTED TO " + data.partnerName;
+        $("#chatStatus").style.color = "#ff5a00";
+
+        $("#chatLog").innerHTML += `<div class="system-message">Successfully matched! You are talking to <b>${data.partnerName}</b>.</div>`;
+        $("#chatInput").disabled = false;
+        $("#sendChat").disabled = false;
+        $("#chatInput").focus();
+      });
+
+      socket.on("message", (data) => {
+        if (data.senderId !== socket.id) {
+          $("#chatLog").innerHTML += `<div class="bubble"><b>${data.senderName}:</b> ${data.text}</div>`;
+          $("#chatLog").scrollTop = $("#chatLog").scrollHeight;
+        }
+      });
+
+      socket.on("partner_disconnected", (data) => {
+        $("#chatLog").innerHTML += `<div class="system-message" style="color: #ff5a00;">${data.message}</div>`;
+        $("#chatInput").disabled = true;
+        $("#sendChat").disabled = true;
+        $("#chatStatus").textContent = "● DISCONNECTED";
+        $("#chatStatus").style.color = "#ff3333";
+      });
+    }
+
+    function switchToAiMode() {
+      if (socket) {
+        socket.emit("leave_chat");
+        socket.disconnect();
+        socket = null;
+      }
+      activeChatMode = "ai";
+      chatHistory = [];
+      $("#fruitIdentity").textContent="PUKE AI";
+      $("#chatMode").textContent="PUKE AI / COMPANION MODE";
+      $("#chatLog").innerHTML+='<div class="bubble">Hey. I’m Puke AI. I’ll actually respond to what you tell me and help you unpack it or put it into words. What’s on your mind?</div>';
+      
+      chatHistory.push({ role: "model", parts: [{ text: "Hey. I’m Puke AI. I’ll actually respond to what you tell me and help you unpack it or put it into words. What’s on your mind?" }] });
+      
+      $("#chatInput").disabled = false;
+      $("#sendChat").disabled = false;
+      $("#chatInput").focus();
+    }
+
+    // Convert chat session text to checkout message
+    function convertChatToPuke(text) {
+      closeModals(true);
+      message.value = text;
+      updateFit();
+      $("#order").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Send chat text
+    function sendChat(){
+      const input=$("#chatInput"), t=input.value.trim(); if(!t)return;
+      $("#chatLog").innerHTML+=`<div class="bubble me">${t.replace(/[<>]/g,"")}</div>`;
+      input.value=""; $("#chatLog").scrollTop=$("#chatLog").scrollHeight;
+
+      if (activeChatMode === "ai") {
+        chatHistory.push({ role: "user", parts: [{ text: t }] });
+
+        const typing=document.createElement("div"); typing.className="typing-ai"; typing.textContent="PUKE AI IS TYPING...";
+        $("#chatLog").appendChild(typing); $("#chatLog").scrollTop=$("#chatLog").scrollHeight;
+        
+        fetch("/api/orders/puke-ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: t, history: chatHistory.slice(0, -1) })
+        })
+        .then(res => res.json())
+        .then(data => {
+          typing.remove();
+          const responseText = data.response;
+          
+          chatHistory.push({ role: "model", parts: [{ text: responseText }] });
+          
+          const b=document.createElement("div");
+          b.className="bubble";
+          b.textContent=responseText;
+          $("#chatLog").appendChild(b);
+          $("#chatLog").scrollTop=$("#chatLog").scrollHeight;
+
+          // Conversion note trigger
+          if (chatHistory.filter(h => h.role === "user").length >= 3 && !$("#chatLog .puke-bridge-note")) {
+            const bridgeNote = document.createElement("div");
+            bridgeNote.className = "privacy-note puke-bridge-note";
+            bridgeNote.style.marginTop = "15px";
+            bridgeNote.style.borderLeftColor = "#ff5a00";
+            bridgeNote.style.background = "#1c130d";
+            bridgeNote.innerHTML = `
+              <b style="color: #ff5a00;">PUKE AI ASSISTANT:</b>
+              <p style="margin: 5px 0 10px; font-size: 12px;">It sounds like you have feelings that need to be sent. Do you want to write this message on a real physical orange and deliver it anonymously?</p>
+              <button class="primary-btn" style="padding: 8px 12px; font-size: 11px;" onclick="convertChatToPuke('${t.replace(/'/g, "\\'")}')">TURN THIS INTO A PUKE 🍊</button>
+            `;
+            $("#chatLog").appendChild(bridgeNote);
+            $("#chatLog").scrollTop = $("#chatLog").scrollHeight;
+          }
+        })
+        .catch(err => {
+          typing.remove();
+          const b=document.createElement("div");
+          b.className="bubble";
+          b.textContent="Connection to Puke AI lost. Please check again.";
+          $("#chatLog").appendChild(b);
+          $("#chatLog").scrollTop=$("#chatLog").scrollHeight;
+        });
+      } else if (socket) {
+        socket.emit("send_message", { text: t });
+      }
+    }
+    $("#sendChat").onclick=sendChat;
+    $("#chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
+
+    // Code modal form
+    $("#codeInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("#findPuke").click()}});
+    
+    let selectedPayment="upi";
+    $$("[data-pay]").forEach(btn=>btn.addEventListener("click",()=>{
+      selectedPayment=btn.dataset.pay;
+      $$("[data-pay]").forEach(b=>b.classList.toggle("active",b===btn));
+      $("#upiPayment").classList.toggle("active",selectedPayment==="upi");
+      $("#cardPayment").classList.toggle("active",selectedPayment==="card");
+      $("#paymentError").style.display="none";
+    }));
+    
+    $$(".quick-upi button").forEach(b=>b.addEventListener("click",()=>{$("#upiId").value="demo@upi"}));
+    $("#cardNumber").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim()});
+    $("#cardExpiry").addEventListener("input",e=>{let v=e.target.value.replace(/\D/g,"").slice(0,4);if(v.length>2)v=v.slice(0,2)+"/"+v.slice(2);e.target.value=v});
+
+    let sound=false;
+    $("#soundToggle").onclick=()=>{sound=!sound;soundSoundOff()};
+    function soundSoundOff(){$("#soundToggle").textContent="SOUND: "+(sound?"ON":"OFF")}
+
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{
+      const target=document.querySelector(a.getAttribute("href"));if(target){e.preventDefault();target.scrollIntoView({behavior:"smooth"})}
+    }));
+  </script>
+</body>
+</html>
