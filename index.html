@@ -295,8 +295,7 @@
               <div class="wave" id="orangeWave"></div>
             </div>
             <div class="mini-orange-content">
-              <span class="mini-orange-title">PUKED</span>
-              <span class="mini-orange-percent" id="orangeFillPercent">0%</span>
+              <span class="mini-orange-percent" id="orangeFillPercent" style="display: none;">PUKED - 0%</span>
             </div>
           </div>
         </div>
@@ -818,6 +817,7 @@
       if (wave && percent) {
         wave.style.transform = `translateY(${100 - within}%)`;
         percent.textContent = "PUKED - " + within + "%";
+        percent.style.display = len > 0 ? "inline-block" : "none";
         
         // Tactile keypress shake feedback
         const composerOrange = $("#composerOrange");
