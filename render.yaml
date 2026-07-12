@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: puke-it
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        value: "mongodb://pukeadmin:Raman1234@cluster0-shard-00-00.8ju23zv.mongodb.net:27017,cluster0-shard-00-01.8ju23zv.mongodb.net:27017,cluster0-shard-00-02.8ju23zv.mongodb.net:27017/pukeit?ssl=true&replicaSet=atlas-8ju23zv-shard-0&authSource=admin&retryWrites=true&w=majority"
+      - key: JWT_SECRET
+        value: "supersecretkey123"
+      - key: ADMIN_EMAIL
+        value: "ramsningh56812@gmail.com"
+      - key: ADMIN_PASSWORD
+        value: "admin123"
