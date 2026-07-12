@@ -16,10 +16,13 @@ if (process.env.GEMINI_API_KEY) {
   console.log("🤖 Gemini API initialized for cloud fallback.");
 }
 
-// Dynamic local model auto-detector
+// Dynamic local model auto-detector with 1200ms timeout threshold
 async function getOllamaModel() {
   try {
-    const res = await fetch(`${OLLAMA_URL}/api/tags`);
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 1200);
+    const res = await fetch(`${OLLAMA_URL}/api/tags`, { signal: controller.signal });
+    clearTimeout(id);
     if (res.ok) {
       const data = await res.json();
       for (const modelName of OLLAMA_MODELS) {
