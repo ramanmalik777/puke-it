@@ -757,6 +757,7 @@
     const $$ = s => document.querySelectorAll(s);
 
     // Global variables
+    const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "" : "https://puke-it.onrender.com";
     let windowActivePukeCode = null;
     let windowParentPukeCode = null;
     let socket = null;
@@ -883,7 +884,7 @@
         $("#shortenBtn").textContent = "SHORTENING...";
         $("#shortenBtn").disabled = true;
 
-        const res = await fetch("/api/orders/shorten", {
+        const res = await fetch(API_URL + "/api/orders/shorten", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: text })
@@ -967,7 +968,7 @@
       };
 
       try {
-        const res = await fetch("/api/orders", {
+        const res = await fetch(API_URL + "/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
@@ -1033,7 +1034,7 @@
       input.style.borderColor="#333";
 
       try {
-        const res = await fetch(`/api/orders/got-puked/${v}`);
+        const res = await fetch(API_URL + `/api/orders/got-puked/${v}`);
         const data = await res.json();
 
         if (res.ok && data.found) {
@@ -1080,7 +1081,7 @@
       }
 
       try {
-        const res = await fetch("/api/shield/report", {
+        const res = await fetch(API_URL + "/api/shield/report", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1108,7 +1109,7 @@
     $("#blockBtn").onclick = async () => {
       const notice=$("#recipientNotice");
       try {
-        const res = await fetch("/api/shield/block", {
+        const res = await fetch(API_URL + "/api/shield/block", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ pukeCode: windowActivePukeCode })
@@ -1164,7 +1165,7 @@
       }
 
       try {
-        const res = await fetch("/api/shield/opt-out", {
+        const res = await fetch(API_URL + "/api/shield/opt-out", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ phone })
@@ -1252,7 +1253,7 @@
       }
 
       try {
-        const res = await fetch(`/api/orders/track/${id}`);
+        const res = await fetch(API_URL + `/api/orders/track/${id}`);
         const data = await res.json();
 
         if (res.ok) {
@@ -1303,7 +1304,7 @@
       notice.style.display = "none";
 
       try {
-        const res = await fetch("/api/auth/login", {
+        const res = await fetch(API_URL + "/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1334,7 +1335,7 @@
       notice.style.display = "none";
 
       try {
-        const res = await fetch("/api/auth/signup", {
+        const res = await fetch(API_URL + "/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1377,7 +1378,7 @@
       if (!token) return;
 
       try {
-        const res = await fetch("/api/auth/me", {
+        const res = await fetch(API_URL + "/api/auth/me", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -1471,7 +1472,7 @@
     }));
 
     function connectSocket(mode) {
-      socket = io();
+      socket = io(API_URL || undefined);
 
       socket.on("connect", () => {
         socket.emit("join_queue", { mode });
@@ -1554,7 +1555,7 @@
         const typing=document.createElement("div"); typing.className="typing-ai"; typing.textContent="PUKE AI IS TYPING...";
         $("#chatLog").appendChild(typing); $("#chatLog").scrollTop=$("#chatLog").scrollHeight;
         
-        fetch("/api/orders/puke-ai", {
+        fetch(API_URL + "/api/orders/puke-ai", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: t, history: chatHistory.slice(0, -1) })
