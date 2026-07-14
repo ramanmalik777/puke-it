@@ -308,7 +308,7 @@
         if (res.ok && data.token) {
           checkAdminSession(data.token);
         } else {
-          err.textContent = data.message || "Invalid Admin Security Credentials.";
+          err.textContent = data.message + " (" + (data.error || "Details unavailable") + ")";
           err.style.display = "block";
         }
       } catch (e) {
