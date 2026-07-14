@@ -278,6 +278,8 @@
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
 
+    const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "" : "https://puke-it.onrender.com";
+
     // Initialize Dashboard
     window.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem("pukeAdminToken");
@@ -296,7 +298,7 @@
       const password = $("#password").value;
 
       try {
-        const res = await fetch("/api/auth/login", {
+        const res = await fetch(API_URL + "/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
@@ -318,7 +320,7 @@
     // Verify token role
     async function checkAdminSession(token) {
       try {
-        const res = await fetch("/api/auth/me", {
+        const res = await fetch(API_URL + "/api/auth/me", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -349,7 +351,7 @@
     async function loadStats() {
       const token = localStorage.getItem("pukeAdminToken");
       try {
-        const res = await fetch("/api/admin/stats", {
+        const res = await fetch(API_URL + "/api/admin/stats", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -371,7 +373,7 @@
       const token = localStorage.getItem("pukeAdminToken");
       try {
         // Query pending & investigate
-        const res = await fetch("/api/admin/orders?moderation=pending", {
+        const res = await fetch(API_URL + "/api/admin/orders?moderation=pending", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -406,7 +408,7 @@
     async function moderateOrder(orderId, status) {
       const token = localStorage.getItem("pukeAdminToken");
       try {
-        const res = await fetch(`/api/admin/moderate/${orderId}`, {
+        const res = await fetch(API_URL + `/api/admin/moderate/${orderId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -429,7 +431,7 @@
     async function loadOrdersTable() {
       const token = localStorage.getItem("pukeAdminToken");
       try {
-        const res = await fetch("/api/admin/orders", {
+        const res = await fetch(API_URL + "/api/admin/orders", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -473,7 +475,7 @@
     async function updateDeliveryStatus(orderId, status) {
       const token = localStorage.getItem("pukeAdminToken");
       try {
-        const res = await fetch(`/api/admin/delivery/${orderId}`, {
+        const res = await fetch(API_URL + `/api/admin/delivery/${orderId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -494,7 +496,7 @@
     async function loadReportsTable() {
       const token = localStorage.getItem("pukeAdminToken");
       try {
-        const res = await fetch("/api/admin/reports", {
+        const res = await fetch(API_URL + "/api/admin/reports", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
