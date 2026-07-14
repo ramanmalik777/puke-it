@@ -1,6 +1,7 @@
 const express = require("express");
 const Order = require("../models/order");
 const Report = require("../models/Report");
+const User = require("../models/User");
 const auth = require("../middleware/auth");
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.get("/stats", auth, requireAdmin, async (req, res) => {
       moderationStatus: { $in: ["pending", "investigate"] },
       safetyScore: { $gte: 50 }
     });
+    const totalSignups = await User.countDocuments();
 
     res.json({
       totalPukes,
@@ -36,6 +38,7 @@ router.get("/stats", auth, requireAdmin, async (req, res) => {
       pukeBackCount,
       pukeBackRate: `${pukeBackRate}%`,
       flaggedCount,
+      totalSignups,
       activeChatUsers: Math.floor(Math.random() * 15) + 8 // Demo real-time active users
     });
   } catch (err) {

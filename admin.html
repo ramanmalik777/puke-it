@@ -42,7 +42,7 @@
     
     /* Stats Grid styling */
     .stats-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 40px;
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; margin-bottom: 40px;
     }
     .stat-card {
       border: 1px solid #333; background: #0c0c0c; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 120px;
@@ -154,6 +154,10 @@
           <strong id="statFlaggedCount" style="color: #ffaa00;">0</strong>
         </div>
         <div class="stat-card">
+          <span>TOTAL USER SIGNUPS</span>
+          <strong id="statTotalSignups">0</strong>
+        </div>
+        <div class="stat-card">
           <span>ACTIVE QUEUED SESSION PORTS</span>
           <strong id="statActiveUsers">0</strong>
         </div>
@@ -226,14 +230,16 @@
                   <th>RECIPIENT SATELLITE KEYS</th>
                   <th>RECIPIENT CONTACT</th>
                   <th>DELIVERY ADDRESS</th>
+                  <th>MESSAGE TEXT</th>
                   <th>PRICING</th>
+                  <th>PAYMENT RECEIPT</th>
                   <th>MODERATION</th>
                   <th>DELIVERY STATUS</th>
                 </tr>
               </thead>
               <tbody id="ordersTableBody">
                 <tr>
-                  <td colspan="7" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td>
+                  <td colspan="9" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td>
                 </tr>
               </tbody>
             </table>
@@ -361,6 +367,7 @@
           $("#statRevenue").textContent = "₹" + data.revenue;
           $("#statPukeBackRate").textContent = data.pukeBackRate;
           $("#statFlaggedCount").textContent = data.flaggedCount;
+          $("#statTotalSignups").textContent = data.totalSignups;
           $("#statActiveUsers").textContent = data.activeChatUsers;
         }
       } catch (err) {
@@ -446,10 +453,20 @@
                 <span style="display:block; font-weight:bold;">${o.recipient.name}</span>
                 <span style="font-size:10px; color:#777;">${o.recipient.phone}</span>
               </td>
-              <td style="font-size:11px; max-width: 200px;">
+              <td style="font-size:11px; max-width: 150px; white-space: normal;">
                 ${o.recipient.house}, ${o.recipient.street}, ${o.recipient.city}, ${o.recipient.state} - ${o.recipient.pin}
               </td>
+              <td style="font-size:12px; max-width: 200px; white-space: normal; color: #ff5a00; font-family: 'DM Mono'; font-weight: bold;">
+                ${o.message}
+              </td>
               <td class="mono">₹${o.price}<br><span style="font-size:9px; color:#555;">${o.orangesCount} ORANGES</span></td>
+              <td>
+                ${o.paymentScreenshotUrl ? `
+                  <a href="${API_URL + o.paymentScreenshotUrl}" target="_blank">
+                    <img src="${API_URL + o.paymentScreenshotUrl}" style="height: 40px; border: 1px solid #333; border-radius: 2px; vertical-align: middle;">
+                  </a>
+                ` : '<span style="color:#555; font-style:italic; font-size:10px;">No Screenshot</span>'}
+              </td>
               <td><span class="badge badge-${o.moderationStatus}">${o.moderationStatus.toUpperCase()}</span></td>
               <td>
                 <select class="select-status" onchange="updateDeliveryStatus('${o.orderId}', this.value)">
@@ -464,7 +481,7 @@
             </tr>
           `).join("");
         } else {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #666; font-style: italic;">No orders placed.</td></tr>`;
         }
       } catch (err) {
         console.log("Orders fetch failure", err);

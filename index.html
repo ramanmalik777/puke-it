@@ -307,6 +307,7 @@
           </div>
           <label for="message">YOUR MESSAGE</label>
           <textarea id="message" maxlength="1200" placeholder="Type the thing you've been holding in..."></textarea>
+          <div id="safetyWarning" style="display: none; background: rgba(255, 90, 0, 0.1); border-left: 3px solid #ff5a00; padding: 12px; font-size: 11px; color: #ff5a00; margin: 10px 0; font-family: 'DM Mono'; font-weight: bold;">⚠️ PUKE SHIELD ALERT: Harsh language detected. This message may fail safety checks and be flagged for admin moderation.</div>
           <div class="message-meta">
             <span><b id="charCount">0</b> characters</span>
             <span>HANDWRITING SPACE ESTIMATE</span>
@@ -497,11 +498,8 @@
             <div><span>STANDARD SHIPPING</span><strong>INCLUDED</strong></div>
             <div class="total"><span>TOTAL</span><strong id="checkoutTotal">₹199</strong></div>
           </div>
-          <div class="payment-tabs">
-            <button type="button" class="active" data-pay="upi">UPI</button>
-            <button type="button" data-pay="card">CARD</button>
-          </div>
-          <div class="payment-method active" id="upiPayment">
+          <!-- UPI Only Payment Option -->
+          <div class="payment-method active" id="upiPayment" style="margin-top: 20px;">
             <div style="text-align: center; background: #111; border: 1px solid #333; padding: 20px; border-radius: 4px; margin-bottom: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
               <span style="font-size: 9px; color: #777; display: block; margin-bottom: 6px; text-transform: uppercase; font-family: 'DM Mono';">UPI Payment Address</span>
               <strong style="font-size: 1.4rem; color: #ff5a00; font-family: 'Archivo Black'; letter-spacing: 0.5px;">8777627387@slc</strong>
@@ -514,16 +512,20 @@
               <!-- App Link -->
               <a id="upiDeepLink" href="" class="outline-btn" style="display: block; text-align: center; text-decoration: none; padding: 12px 14px; font-size: 11px; font-weight: bold; border-color: #ff5a00; color: #ff5a00; font-family: 'DM Mono';">PAY VIA UPI APP ↗</a>
             </div>
+
+            <!-- Screenshot Upload -->
+            <div style="background: #111; border: 1px solid #333; padding: 18px; margin-bottom: 18px; border-radius: 3px;">
+              <span style="display: block; font: 9px 'DM Mono'; color: #ff5a00; margin-bottom: 10px; text-transform: uppercase;">1. Upload Payment Screenshot</span>
+              <input type="file" id="screenshotFile" accept="image/*" style="font-size: 11px; color: #aaa; width: 100%; margin-bottom: 10px;" required>
+              <input type="hidden" id="screenshotUrl" name="paymentScreenshotUrl">
+              <div id="screenshotUploadStatus" style="font: 10px 'DM Mono'; color: #666; margin-top: 6px;">No screenshot uploaded.</div>
+            </div>
+
+            <span style="display: block; font: 9px 'DM Mono'; color: #ff5a00; margin-bottom: 10px; text-transform: uppercase;">2. Verification Details</span>
             <label for="upiId">Your UPI ID (For transaction verification)</label>
             <input id="upiId" placeholder="name@upi">
             <div class="quick-upi"><button type="button">GPay</button><button type="button">PhonePe</button><button type="button">Paytm</button></div>
           </div>
-          <div class="payment-method" id="cardPayment">
-            <label>CARD DETAILS</label>
-            <input id="cardNumber" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
-            <div class="card-row"><input id="cardExpiry" maxlength="5" placeholder="MM/YY"><input id="cardCvv" maxlength="3" placeholder="CVV"></div>
-          </div>
-          <div class="demo-payment mono">DEMO PAYMENT · NO REAL CHARGE</div>
           <div id="paymentError" class="payment-error"></div>
           <button type="submit" class="primary-btn full" id="payNowBtn">PAY NOW <span>↗</span></button>
         </div>
@@ -824,6 +826,15 @@
       $("#orangeCount").textContent = currentOranges;
       $("#price").textContent = "₹"+currentPrice;
 
+      // Dynamic Puke Shield live warning while typing
+      const messageVal = message.value.trim().toLowerCase();
+      const harshWords = ["fuck", "bitch", "bastard", "shit", "asshole", "dick", "cunt", "motherfucker", "faggot", "nigger", "kill", "abuse", "harass", "threat", "hate"];
+      const hasHarsh = harshWords.some(w => messageVal.includes(w));
+      const safetyWarning = $("#safetyWarning");
+      if (safetyWarning) {
+        safetyWarning.style.display = hasHarsh ? "block" : "none";
+      }
+
       // Dynamic Orange liquid fill visualization
       const wave = $("#orangeWave");
       const percent = $("#orangeFillPercent");
@@ -962,8 +973,8 @@
     $("#orderForm").addEventListener("submit", async e=>{
       e.preventDefault();
       const err=$("#paymentError");
-      if(selectedPayment==="upi" && !$("#upiId").value.trim()){err.textContent="Enter a UPI ID or choose a demo UPI app.";err.style.display="block";return}
-      if(selectedPayment==="card" && ($("#cardNumber").value.replace(/\s/g,"").length<16 || $("#cardExpiry").value.length<5 || $("#cardCvv").value.length<3)){err.textContent="Enter complete demo card details.";err.style.display="block";return}
+      if(!$("#screenshotUrl").value){err.textContent="Please upload your payment screenshot/receipt to submit your order.";err.style.display="block";return}
+      if(!$("#upiId").value.trim()){err.textContent="Enter a UPI ID for payment verification.";err.style.display="block";return}
       err.style.display="none";
 
       $("#payNowBtn").textContent="PROCESSING PAYMENT...";
@@ -988,7 +999,8 @@
           instructions: formData.get("deliveryNote")
         },
         message: message.value.trim(),
-        parentPukeCode: windowParentPukeCode
+        parentPukeCode: windowParentPukeCode,
+        paymentScreenshotUrl: $("#screenshotUrl").value
       };
 
       try {
@@ -1632,17 +1644,40 @@
     $("#codeInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("#findPuke").click()}});
     
     let selectedPayment="upi";
-    $$("[data-pay]").forEach(btn=>btn.addEventListener("click",()=>{
-      selectedPayment=btn.dataset.pay;
-      $$("[data-pay]").forEach(b=>b.classList.toggle("active",b===btn));
-      $("#upiPayment").classList.toggle("active",selectedPayment==="upi");
-      $("#cardPayment").classList.toggle("active",selectedPayment==="card");
-      $("#paymentError").style.display="none";
-    }));
     
     $$(".quick-upi button").forEach(b=>b.addEventListener("click",()=>{$("#upiId").value="demo@upi"}));
-    $("#cardNumber").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").replace(/(.{4})/g,"$1 ").trim()});
-    $("#cardExpiry").addEventListener("input",e=>{let v=e.target.value.replace(/\D/g,"").slice(0,4);if(v.length>2)v=v.slice(0,2)+"/"+v.slice(2);e.target.value=v});
+
+    // Screenshot file upload listener
+    $("#screenshotFile").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      const status = $("#screenshotUploadStatus");
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("screenshot", file);
+
+      status.textContent = "UPLOADING RECEIPT SCREENSHOT...";
+      status.style.color = "#ff5a00";
+
+      try {
+        const res = await fetch(API_URL + "/api/orders/upload-screenshot", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        if (res.ok && data.screenshotUrl) {
+          $("#screenshotUrl").value = data.screenshotUrl;
+          status.textContent = "RECEIPT SCREENSHOT UPLOADED ✓";
+          status.style.color = "#4ade80";
+        } else {
+          status.textContent = data.message || "Failed to upload screenshot.";
+          status.style.color = "#ff784f";
+        }
+      } catch (err) {
+        status.textContent = "Upload failed. Check connection.";
+        status.style.color = "#ff784f";
+      }
+    });
 
     let sound=false;
     $("#soundToggle").onclick=()=>{sound=!sound;soundSoundOff()};

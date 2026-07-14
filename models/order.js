@@ -35,6 +35,7 @@ const orderSchema = new mongoose.Schema({
   },
   flaggedReason: { type: String, default: "" },
   parentPukeCode: { type: String, default: null },
+  paymentScreenshotUrl: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now }
 });
 

@@ -6,6 +6,32 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const router = express.Router();
 
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
+// Ensure uploads folder exists
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `screenshot-${Date.now()}${path.extname(file.originalname)}`);
+  }
+});
+
+const upload = multer({ storage });
+
+// Screenshot Upload Endpoint
+router.post("/upload-screenshot", upload.single("screenshot"), (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+  res.json({ screenshotUrl: `/uploads/${req.file.filename}` });
+});
+
 const OLLAMA_URL = "http://localhost:11434";
 const OLLAMA_MODELS = ["qwen2.5:1.5b", "gemma4:e2b"];
 
@@ -360,7 +386,8 @@ router.post("/", async (req, res) => {
       safetyScore,
       moderationStatus,
       flaggedReason,
-      parentPukeCode: parentPukeCode || null
+      parentPukeCode: parentPukeCode || null,
+      paymentScreenshotUrl: req.body.paymentScreenshotUrl || ""
     });
 
     await order.save();
