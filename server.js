@@ -1,4 +1,9 @@
 require("dotenv").config();
+
+// Production Fallbacks for Render deployment
+process.env.JWT_SECRET = process.env.JWT_SECRET || "supersecretkey123";
+process.env.ADMIN_EMAIL = process.env.ADMIN_EMAIL || "ramsningh56812@gmail.com";
+process.env.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
